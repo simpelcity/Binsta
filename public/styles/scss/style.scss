@@ -1,0 +1,59 @@
+$light: whitesmoke;
+$gray-200: #e9ecef;
+$gray-500: #adb5bd;
+
+.logo-nav,
+.logo {
+	font-family: "Freestyle Script", sans-serif;
+}
+
+form,
+form > input {
+	background-color: $gray-200 !important;
+}
+
+.bi-search,
+form > input::placeholder {
+	color: $gray-500 !important;
+}
+
+.nav-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.icon {
+	width: 25px;
+	height: 25px;
+}
+
+.error {
+	color: #bd2727;
+	background-color: #fecaca;
+	border-radius: 5px;
+	padding: 2% 4%;
+	font-weight: bold;
+}
+
+/* login styling */
+
+.login-img {
+	width: 90%;
+	height: 80%;
+}
+
+.logo {
+	font-size: 400% !important;
+}
+
+.login-form {
+	height: fit-content;
+}
+
+/* active input styling */
+
+input:focus {
+	box-shadow: none !important;
+}
+
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";

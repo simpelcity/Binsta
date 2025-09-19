@@ -1,0 +1,60 @@
+{% extends '/layouts/app.twig' %} {% block content %} {% for snippet in snippets %}
+<div class="card my-4" id="snippet-{{ snippet.id }}">
+	<div class="d-flex p-3 align-items-center">
+		<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
+		<p class="m-0 fw-bold">{{ snippet.author.username }}</p>
+	</div>
+	<div class="code-block">
+		<pre
+			class="m-0 rounded-0"><code id="code-block" class="language-{{ snippet.language }}">{{ snippet.code }}</code></pre>
+	</div>
+	<div class="card-body p-0">
+		<div class="likes d-flex px-3 pt-3">
+			<img src="/assets/icons/heart.png" alt="Like" class="icon me-2" />
+			<p id="likes">0 likes</p>
+		</div>
+		<div class="comments px-3 pb-2">
+			<div class="caption pb-2">
+				<div class="d-flex mb-1">
+					<b id="username" class="me-2 mb-0">{{ snippet.author.username }}</b>
+					<p id="comment" class="mb-0">{{ snippet.caption }}</p>
+				</div>
+				<small class="m-0 text-secondary">{{ snippet.current_time | upper }}</small>
+			</div>
+			<div id="comments-{{ snippet.id }}"></div>
+			{% if snippet.comments|length > 0 %}
+			<button
+				class="btn btn-link border-0 p-0 text-secondary fw-bold text-decoration-none show-more-comments"
+				data-snippet-id="{{ snippet.id }}">
+				<small>Show more comments</small>
+				<small><i class="bi bi-chevron-down me-3"></i></small>
+			</button>
+			<button
+				class="btn btn-link border-0 p-0 text-secondary fw-bold text-decoration-none hide-comments d-none"
+				data-snippet-id="{{ snippet.id }}">
+				<small>Hide comments</small>
+				<small><i class="bi bi-chevron-up"></i></small>
+			</button>
+			{% endif %}
+		</div>
+		<div class="post-comment border-top">
+			<form action="/comment/create" method="post" class="d-flex bg-white border-0 rounded-bottom">
+				<input type="hidden" name="snippet_id" value="{{ snippet.id }}" />
+				<input
+					type="text"
+					class="form-control bg-white border-0 py-3 comment-input"
+					name="comment"
+					placeholder="Post a comment..." />
+				<button
+					type="submit"
+					class="border-0 bg-white rounded-bottom text-primary pe-3 post-comment-btn"
+					disabled>
+					Post
+				</button>
+			</form>
+		</div>
+	</div>
+</div>
+{% endfor %} {% endblock %} {% block script %}
+<script src="../../assets/js/comment.js"></script>
+{% endblock %}

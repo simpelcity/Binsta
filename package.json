@@ -1,0 +1,17 @@
+{
+  "name": "binsta",
+  "version": "1.0.0",
+  "main": "index.php",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "sass --watch ./public/styles/scss/style.scss ./public/styles/css/style.css",
+    "build": "sass ./public/styles/scss/style.scss ./public/styles/css/style.css --style compressed"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "bootstrap": "^5.3.7",
+    "sass": "^1.89.2"
+  }
+}

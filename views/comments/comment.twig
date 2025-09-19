@@ -1,0 +1,6 @@
+{% for comment in snippet.comments %}
+<div class="d-flex mb-1">
+	<b class="me-2 mb-0">{{ comment.author.username }}</b>
+	<p class="m-0">{{ comment.comment }}</p>
+</div>
+{% endfor %}

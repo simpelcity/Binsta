@@ -1,0 +1,35 @@
+{% extends '/layouts/app.twig' %} {% block content %}
+<div class="card mt-5 p-4 text-center">
+	<h1 class="m-0">Create new snippet</h1>
+	<div class="card-body">
+		<form action="/snippet/create" method="post" class="bg-white">
+			<div class="row mb-3">
+				<textarea
+					class="form-control bg-light"
+					name="code"
+					placeholder="Paste your code here"
+					rows="8"></textarea>
+			</div>
+			<div class="row d-flex justify-content-center">
+				<div class="col-6">
+					<div>
+						<label for="language-select" class="from-label mb-2 fw-bold fs-5">Syntax highlighting</label>
+						<select class="form-select bg-light" aria-label="Language" name="language" id="language-select">
+							<option selected>None</option>
+						</select>
+					</div>
+					<button type="submit" name="post" class="btn btn-primary w-50 mt-3">Post</button>
+				</div>
+				<div class="col-6">
+					<textarea class="form-control bg-light" name="caption" placeholder="Caption" rows="5"></textarea>
+				</div>
+				{% if error %}
+				<div class="alert alert-danger text-danger">{{ error }}</div>
+				{% endif %}
+			</div>
+		</form>
+	</div>
+</div>
+{% endblock %} {% block script %}
+<script src="../../assets/js/snippet.js"></script>
+{% endblock %}

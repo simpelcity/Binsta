@@ -1,0 +1,16 @@
+{
+    "require": {
+        "twig/twig": "^3.0",
+        "gabordemooij/redbean": "^5.7",
+        "nesbot/carbon": "^3.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "Binsta\\Controllers\\": "controllers/",
+            "Binsta\\Models\\": "models/"
+        },
+        "files": [
+            "helpers.php"
+        ]
+    }
+}
