@@ -46,6 +46,7 @@ class CommentController extends BaseController
         foreach ($comments as $comment) {
             $comment->created_at = $this->timeAgo(new \DateTime($comment->created_at));
             $formattedComments[] = [
+                'user_id' => $comment->author->id,
                 'username' => $comment->author->username,
                 'comment' => $comment->comment,
                 'created_at' => $comment->created_at,

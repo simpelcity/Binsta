@@ -26,4 +26,9 @@ class Comment
 
         return $comments;
     }
+
+    public static function countBySnippetId($snippetId)
+    {
+        return R::count('comments', 'snippet_id = ?', [$snippetId]);
+    }
 }

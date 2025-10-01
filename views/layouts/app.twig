@@ -30,13 +30,19 @@
 					</a>
 				</div>
 				<div class="search-bar my-auto">
-					<form class="d-flex align-items-center border-0 rounded-3 py-2 px-3" role="search" action="">
+					<form
+						class="d-flex align-items-center border-0 rounded-3 py-2 px-3"
+						role="search"
+						action="/search"
+						method="get">
 						<i class="bi bi-search"></i>
 						<input
 							class="form-control border-0 rounded-3 py-0 ps-2 pe-0"
+							name="search"
 							type="search"
 							placeholder="Search"
-							aria-label="Search" />
+							aria-label="Search"
+							value="{{ searchTerm|default('') }}" />
 					</form>
 				</div>
 				<div class="links h-auto my-auto">
@@ -64,7 +70,12 @@
 								data-bs-toggle="dropdown"
 								aria-expanded="false" />
 							<ul class="dropdown-menu">
-								<li><a href="/user/profile" class="dropdown-item">Profile</a></li>
+								<li>
+									<p class="dropdown-item m-0 fw-bold text-black disabled">
+										{{ userProfile.username }}
+									</p>
+								</li>
+								<li><a href="/user/profile/{{ userProfile.id }}" class="dropdown-item">Profile</a></li>
 								<li><a href="/auth/logout" class="dropdown-item">Logout</a></li>
 							</ul>
 						</div>
@@ -88,5 +99,11 @@
 			integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
 			crossorigin="anonymous"></script>
 		{% block script %}{% endblock %}
+		<script>
+			const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+			const tooltipList = [...tooltipTriggerList].map(
+				(tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+			);
+		</script>
 	</body>
 </html>

@@ -17,6 +17,8 @@ if ($controllerName === 'Binsta\Controllers\AuthController') {
     $method = isset($parts[1]) && $parts[1] !== '' ? $parts[1] : 'login';
 } elseif ($controllerName === 'Binsta\Controllers\CommentController') {
     $method = isset($parts[1]) && $parts[1] !== '' ? $parts[1] : 'getCommentsBySnippetId';
+} elseif ($controllerName === 'Binsta\Controllers\SearchController') {
+    $method = isset($parts[1]) && $parts[1] !== '' ? $parts[1] : 'search';
 } else {
     $method = isset($parts[1]) && $parts[1] !== '' ? $parts[1] : 'index';
 }

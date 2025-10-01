@@ -29,4 +29,9 @@ class User
         $user->password = password_hash($password, PASSWORD_BCRYPT);
         return R::store($user);
     }
+
+    public static function findUserSnippets($userId)
+    {
+        return R::findAll('snippets', 'user_id = ? ORDER BY created_at DESC', [$userId]);
+    }
 }

@@ -1,0 +1,49 @@
+{% extends '/layouts/app.twig' %} {% block content %}
+<div class="mt-5 w-75 mx-auto">
+	<div class="user-profile col-12 d-flex mb-5">
+		<div class="profile-picture col-2">
+			<img src="/assets/images/profile-user.png" alt="Profile Picture" class="profile-img" />
+		</div>
+		<div class="user-info col-10">
+			<div class="row mb-2">
+				<h3 class="username fw-bold mb-0 me-4 p-0">{{ user.username }}</h3>
+				<a href="/user/edit/{{ user.id }}" class="btn btn-edit fw-bold me-4">Edit Profile</a>
+				<a href="/user/password" class="btn btn-password fw-bold me-4">Change Password</a>
+			</div>
+			<div class="row">
+				{% if user.name is not empty %}
+				<p class="name mb-1">{{ user.name }}</p>
+				{% endif %} {% if user.bio is not empty %}
+				<p class="bio mb-0">{{ user.bio }}</p>
+				{% else %}
+				<p class="bio mb-0">No bio yet.</p>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+	<div class="user-posts">
+		{% if snippets|length > 0 %}
+		<div class="row">
+			{% for snippet in snippets %}
+			<div class="col-4">
+				<div class="card card-snippet">
+					<a href="/#snippet-{{ snippet.id }}" class="snippet-link">
+						<pre
+							class="m-0 rounded-0"><code id="code-block" class="language-{{ snippet.language }}">{{ snippet.code }}</code></pre>
+						<div class="overlay">
+							<div>
+								<i class="bi bi-chat-fill"></i>
+								<p class="m-0">{{ snippet.comment_count }}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+			</div>
+			{% endfor %}
+		</div>
+		{% else %}
+		<h2 class="text-center fw-bold">No posts.</h2>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}

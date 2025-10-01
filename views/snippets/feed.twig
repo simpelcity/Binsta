@@ -1,8 +1,12 @@
 {% extends '/layouts/app.twig' %} {% block content %} {% for snippet in snippets %}
 <div class="card my-4" id="snippet-{{ snippet.id }}">
-	<div class="d-flex p-3 align-items-center">
-		<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
-		<p class="m-0 fw-bold">{{ snippet.author.username }}</p>
+	<div class="p-3">
+		<a
+			href="/user/profile/{{ snippet.author.id }}"
+			class="d-flex align-items-center text-decoration-none text-black">
+			<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
+			<p class="m-0 fw-bold">{{ snippet.author.username }}</p>
+		</a>
 	</div>
 	<div class="code-block">
 		<pre
@@ -29,7 +33,11 @@
 		<div class="comments px-3 pb-2">
 			<div class="caption pb-2">
 				<div class="d-flex mb-1">
-					<b id="username" class="me-2 mb-0">{{ snippet.author.username }}</b>
+					<a
+						href="/user/profile/{{ snippet.author.id }}"
+						class="d-flex align-items-center text-decoration-none text-black">
+						<b id="username" class="me-2 mb-0">{{ snippet.author.username }}</b>
+					</a>
 					<p id="comment" class="mb-0">{{ snippet.caption }}</p>
 				</div>
 				<small class="m-0 text-secondary">{{ snippet.current_time | upper }}</small>

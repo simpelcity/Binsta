@@ -37,7 +37,10 @@ document.addEventListener("DOMContentLoaded", () => {
 				commentsDiv.innerHTML += `
 				<div class="comment mb-1">
 					<div class="d-flex">
-						<b class="me-2 mb-0">${comment.username}</b>
+						<a href="/user/profile/${comment.user_id}" class="d-flex align-items-center text-decoration-none text-black">
+							<img src="/assets/images/profile-user.png" alt="User" class="comment-icon me-2" />
+							<b class="me-2 mb-0">${comment.username}</b>
+						</a>
 						<p class="m-0">${comment.comment}</p>
 					</div>
 					<small class="text-secondary">${comment.created_at.toUpperCase()}</small>

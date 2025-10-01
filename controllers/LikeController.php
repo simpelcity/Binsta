@@ -5,7 +5,6 @@ namespace Binsta\Controllers;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Binsta\Models\Like;
-use Binsta\Models\Snippet;
 
 class LikeController extends BaseController
 {

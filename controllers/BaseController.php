@@ -39,7 +39,7 @@ class BaseController
 
     public function findAll($typeOfBean)
     {
-        return R::findAll($typeOfBean);
+        return R::findAll($typeOfBean, 'ORDER BY created_at DESC');
     }
 
     public function timeAgo(\DateTime $createdAt)

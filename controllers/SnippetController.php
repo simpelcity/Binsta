@@ -13,11 +13,13 @@ class SnippetController extends BaseController
     {
         $this->authorizeUser();
         $user = User::findById($_SESSION['user']);
+        $userProfile = User::findById($_SESSION['user']);
 
         renderPage('snippets/create.twig', [
             'title' => 'Create snippet',
             'activeController' => 'create',
             'user' => $user,
+            'userProfile' => $userProfile,
         ]);
     }
 
