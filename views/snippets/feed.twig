@@ -10,8 +10,21 @@
 	</div>
 	<div class="card-body p-0">
 		<div class="likes d-flex px-3 pt-3">
-			<img src="/assets/icons/heart.png" alt="Like" class="icon me-2" />
-			<p id="likes">0 likes</p>
+			<form action="/like/add" method="post" class="d-flex align-items-center bg-white">
+				<input type="hidden" name="snippet_id" value="{{ snippet.id }}" />
+				<button type="submit" class="btn btn-link p-0 border-0 rounded-0">
+					{% if snippet.userLiked %}
+					<img src="/assets/icons/heart-fill.png" alt="Like" class="icon me-2" />
+					{% else %}
+					<img src="/assets/icons/heart.png" alt="Like" class="icon me-2" />
+					{% endif %}
+				</button>
+			</form>
+			{% if snippet.likes == 1 %}
+			<p class="my-auto" id="likes-{{ snippet.id }}">{{ snippet.likes }} like</p>
+			{% else %}
+			<p class="my-auto" id="likes-{{ snippet.id }}">{{ snippet.likes }} likes</p>
+			{% endif %}
 		</div>
 		<div class="comments px-3 pb-2">
 			<div class="caption pb-2">

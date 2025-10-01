@@ -56,4 +56,8 @@ input:focus {
 	box-shadow: none !important;
 }
 
+.pfp-icon:hover {
+	cursor: pointer;
+}
+
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
