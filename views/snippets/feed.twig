@@ -3,8 +3,16 @@
 	<div class="p-3">
 		<a
 			href="/user/profile/{{ snippet.author.id }}"
-			class="d-flex align-items-center text-decoration-none text-black">
-			<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
+			class="d-flex align-items-center text-decoration-none"
+			style="color: inherit">
+			{% if snippet.author.pfp %}
+			<img
+				src="/assets/uploads/{{ snippet.author.pfp }}"
+				alt="User"
+				class="nav-icon theme-icon me-2 rounded-circle" />
+			{% else %}
+			<img src="/assets/icons/light/profile-user.png" alt="User" class="nav-icon theme-icon me-2" />
+			{% endif %}
 			<p class="m-0 fw-bold">{{ snippet.author.username }}</p>
 		</a>
 	</div>
@@ -14,13 +22,13 @@
 	</div>
 	<div class="card-body p-0">
 		<div class="likes d-flex px-3 pt-3">
-			<form action="/like/add" method="post" class="d-flex align-items-center bg-white">
+			<form action="/like/add" method="post" class="d-flex align-items-center">
 				<input type="hidden" name="snippet_id" value="{{ snippet.id }}" />
 				<button type="submit" class="btn btn-link p-0 border-0 rounded-0">
 					{% if snippet.userLiked %}
-					<img src="/assets/icons/heart-fill.png" alt="Like" class="icon me-2" />
+					<img src="/assets/icons/light/heart-fill.png" alt="Like" class="icon theme-icon me-2" />
 					{% else %}
-					<img src="/assets/icons/heart.png" alt="Like" class="icon me-2" />
+					<img src="/assets/icons/light/heart.png" alt="Like" class="icon theme-icon me-2" />
 					{% endif %}
 				</button>
 			</form>

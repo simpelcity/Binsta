@@ -2,29 +2,36 @@ $light: whitesmoke;
 $gray-200: #e9ecef;
 $gray-500: #adb5bd;
 
+@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+
+/* theme colors */
+
+:root,
+[data-bs-theme="light"] {
+	--bs-body-bg: #f5f5f5;
+	--bs-body-color: black;
+	$secondary: $gray-200;
+	--bs-secondary: $secondary;
+	--bs-secondary-rgb: #{red($secondary)}, #{green($secondary)}, #{blue($secondary)};
+	--bs-card-bg: #f0ffff;
+	--bs-dark-rgb: #{red(#f0ffff)}, #{green(#f0ffff)}, #{blue(#f0ffff)};
+}
+
+[data-bs-theme="dark"] {
+	--bs-body-bg: #212529;
+	--bs-body-color: #f5f5f5;
+	$secondary: #212529;
+	--bs-secondary: $secondary;
+	--bs-secondary-rgb: #{red($secondary)}, #{green($secondary)}, #{blue($secondary)};
+	--bs-card-bg: #181b1d;
+	--bs-dark-rgb: #{red(#181b1d)}, #{green(#181b1d)}, #{blue(#181b1d)};
+}
+
+/* main styling */
+
 .logo-nav,
 .logo {
 	font-family: "Freestyle Script", sans-serif;
-}
-
-form,
-form > input {
-	background-color: $gray-200 !important;
-}
-
-.bi-search,
-form > input::placeholder {
-	color: $gray-500 !important;
-}
-
-.nav-icon {
-	width: 30px;
-	height: 30px;
-}
-
-.icon {
-	width: 25px;
-	height: 25px;
 }
 
 .error {
@@ -35,17 +42,19 @@ form > input::placeholder {
 	font-weight: bold;
 }
 
-.row {
-	--bs-gutter-x: 0rem !important;
+body {
+	transition: background-color 0.3s, color 0.3s;
 }
 
-.pfp-icon:hover {
-	cursor: pointer;
+body.dark-theme {
+	background-color: #121212 !important;
+	color: white !important;
 }
 
-.comment-icon {
-	width: 25px;
-	height: 25px;
+/* active input styling */
+
+input:focus {
+	box-shadow: none !important;
 }
 
 /* login styling */
@@ -55,12 +64,26 @@ form > input::placeholder {
 	height: 80%;
 }
 
-.logo {
-	font-size: 400% !important;
-}
-
 .login-form {
 	height: fit-content;
+}
+
+/* header styling */
+
+.nav-icon {
+	width: 30px;
+	height: 30px;
+}
+
+.vr {
+	opacity: 0.5 !important;
+}
+
+/* feed styling */
+
+.icon {
+	width: 25px;
+	height: 25px;
 }
 
 /* profile page styling */
@@ -82,9 +105,15 @@ form > input::placeholder {
 	width: fit-content !important;
 }
 
+.row {
+	--bs-gutter-x: 0rem !important;
+}
+
+/* profile posts styling */
+
 .card-snippet {
 	width: 100%;
-	height: 70% !important;
+	height: 100% !important;
 	overflow: hidden;
 	display: flex;
 }
@@ -117,10 +146,6 @@ form > input::placeholder {
 	height: 100%;
 	background: rgba(0, 0, 0, 0.6);
 	color: #fff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	font-weight: bold;
 	font-size: 1.2rem;
 	opacity: 0;
 	transition: opacity 0.3s ease;
@@ -131,10 +156,17 @@ form > input::placeholder {
 	opacity: 1;
 }
 
-/* active input styling */
-
-input:focus {
-	box-shadow: none !important;
+.user-posts .col-4 {
+	height: 40rem !important;
 }
 
-@import "../../../node_modules/bootstrap/scss/bootstrap.scss";
+/* tablet landscape styling */
+
+@media (min-width: 992px) and (max-width: 1200px) {
+	.login-img {
+		width: 90%;
+		height: 60%;
+	}
+}
+
+// @import "../../../node_modules/bootstrap-icons/font/bootstrap-icons";

@@ -1,40 +1,47 @@
 {% extends '/layouts/auth.twig' %} {% block content %}
-<div class="d-flex vh-100 justify-content-center">
-	<div class="logo-head mt-5">
-		<img src="/assets/images/login-img.png" alt="Logo" class="login-img" />
-	</div>
-	<div class="mt-5">
-		<div class="login-form border bg-white p-4 mb-3">
-			<h1 class="logo mb-0 mt-2 d-flex justify-content-center">Binsta</h1>
-			<form action="/auth/login" method="post">
-				<div class="form-content bg-white">
-					<div class="mb-3">
-						<div class="input-box border border rounded-1 bg-light mb-2">
-							<input
-								type="email"
-								class="form-control border-0 rounded-1 py-2 bg-light"
-								name="email"
-								placeholder="Email address" />
-						</div>
-						<div class="input-box border rounded-1 bg-light d-flex align-items-center">
-							<input
-								type="password"
-								class="form-control border-0 rounded-1 py-2 bg-light"
-								name="password"
-								placeholder="Password"
-								id="password" />
-							<i class="bi bi-eye-slash-fill fs-4 me-3" id="eyeicon"></i>
-						</div>
-					</div>
-					{% if error %}
-					<div class="alert alert-danger text-danger">{{ error }}</div>
-					{% endif %}
-					<button type="submit" name="login" class="btn btn-primary w-100 text-white">Log in</button>
-				</div>
-			</form>
+<div class="row mx-auto vh-100">
+	<div class="col-12 col-lg-7 col-xl-7 d-none d-lg-flex justify-content-end vh-100">
+		<div class="logo-head mt-5">
+			<img src="/assets/images/login-img.png" alt="Logo" class="login-img" />
 		</div>
-		<div class="register border bg-white p-2 d-flex justify-content-center">
-			<p class="m-0">Don't have an account? <a href="/auth/register" class="text-decoration-none">Sign up</a></p>
+	</div>
+	<div
+		class="col-12 col-lg-4 col-xl-5 d-flex justify-content-center justify-content-xl-start align-items-md-center align-items-lg-start">
+		<div class="mt-5 mt-md-0 mt-lg-5">
+			<div class="login-form border bg-white p-4 mb-3">
+				<h1 class="logo mb-0 mt-2 d-flex justify-content-center">Binsta</h1>
+				<form action="/auth/login" method="post">
+					<div class="form-content bg-white">
+						<div class="mb-3">
+							<div class="input-box border border rounded-1 bg-light mb-2">
+								<input
+									type="email"
+									class="form-control border-0 rounded-1 py-2 bg-light"
+									name="email"
+									placeholder="Email address" />
+							</div>
+							<div class="input-box border rounded-1 bg-light d-flex align-items-center">
+								<input
+									type="password"
+									class="form-control border-0 rounded-1 py-2 bg-light"
+									name="password"
+									placeholder="Password"
+									id="password" />
+								<i class="bi bi-eye-slash-fill fs-4 me-3" id="eyeicon"></i>
+							</div>
+						</div>
+						{% if error %}
+						<div class="alert alert-danger text-danger">{{ error }}</div>
+						{% endif %}
+						<button type="submit" name="login" class="btn btn-primary w-100 text-white">Log in</button>
+					</div>
+				</form>
+			</div>
+			<div class="register border bg-white p-2 d-flex justify-content-center">
+				<p class="m-0">
+					Don't have an account? <a href="/auth/register" class="text-decoration-none">Sign up</a>
+				</p>
+			</div>
 		</div>
 	</div>
 </div>

@@ -11,7 +11,7 @@ CREATE TABLE `users` (
     `password` VARCHAR(255) NOT NULL,
     `name` VARCHAR(100) NULL,
     `bio` TEXT NULL,
-    `profile_picture` VARCHAR(255) NULL,
+    `pfp` VARCHAR(100) NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 

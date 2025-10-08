@@ -1,0 +1,75 @@
+{% extends '/layouts/app.twig' %} {% block content %}
+<div class="pt-5 w-75 mx-auto">
+	<form action="/user/edit" method="post" enctype="multipart/form-data">
+		<div class="mb-3">
+			<label for="username">Username</label>
+			<input type="text" name="username" id="username" placeholder="Username" />
+		</div>
+		<div class="mb-3">
+			<label for="email">Email</label>
+			<input type="email" name="email" id="email" placeholder="Email" />
+		</div>
+		<div class="mb-3">
+			<label for="bio">Bio</label>
+			<input type="text" name="bio" id="bio" placeholder="Bio" />
+		</div>
+		<button type="submit" name="submit">Save changes</button>
+	</form>
+	<button type="button" data-bs-toggle="modal" data-bs-target="#pfpModal">
+		{% if user.pfp %}
+		<img src="/assets/uploads/{{ user.pfp }}" alt="Profile picture" class="profile-img rounded-circle" />
+		{% else %}
+		<img src="/assets/icons/light/profile-user.png" alt="Profile Picture" class="profile-img" />
+		{% endif %}
+	</button>
+
+	<div class="modal fade" id="pfpModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<form action="/user/edit" method="post" enctype="multipart/form-data">
+					<div class="modal-header">
+						<h1 class="modal-title fs-5" id="exampleModalLabel">Change Profile Photo</h1>
+					</div>
+					<div class="modal-body">
+						<div>
+							<label for="pfp">Change profile picture</label>
+							<input type="file" name="pfp" id="pfp" />
+						</div>
+						<div>
+							<form action="/user/removePhoto" method="post" style="display: inline">
+								<button type="submit" name="remove_pfp" value="1" class="btn btn-link text-danger p-0">
+									Remove current photo
+								</button>
+							</form>
+						</div>
+						<div class="">
+							<button type="submit" name="submit">Save changes</button>
+							<button type="button" class="" data-bs-dismiss="modal">Cancel</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{% if status %}
+	<p>{{ status }}</p>
+	{% endif %}
+</div>
+{% endblock %} {% block script %}
+<script>
+	document.getElementById("removePhoto")?.addEventListener("click", function () {
+		if (confirm("Are you sure you want to remove your current photo?")) {
+			document.getElementById("remove_pfp").value = "1";
+			this.textContent = "Photo will be removed on save";
+			this.style.color = "gray";
+		}
+	});
+
+	const myModal = document.getElementById("myModal");
+	const myInput = document.getElementById("myInput");
+
+	myModal.addEventListener("shown.bs.modal", () => {
+		myInput.focus();
+	});
+</script>
+{% endblock %}
