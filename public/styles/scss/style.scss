@@ -1,6 +1,7 @@
 $light: whitesmoke;
 $gray-200: #e9ecef;
 $gray-500: #adb5bd;
+$info: #6c757d;
 
 @import "../../../node_modules/bootstrap/scss/bootstrap.scss";
 
@@ -13,8 +14,23 @@ $gray-500: #adb5bd;
 	$secondary: $gray-200;
 	--bs-secondary: $secondary;
 	--bs-secondary-rgb: #{red($secondary)}, #{green($secondary)}, #{blue($secondary)};
+	$light: whitesmoke;
+	--bs-light: $light;
+	--bs-light-rgb: #{red($light)}, #{green($light)}, #{blue($light)};
 	--bs-card-bg: #f0ffff;
 	--bs-dark-rgb: #{red(#f0ffff)}, #{green(#f0ffff)}, #{blue(#f0ffff)};
+	$black: black;
+	--bs-black: $black;
+	--bs-black-rgb: #{red($black)}, #{green($black)}, #{blue($black)};
+	$white: #f0ffff;
+	--bs-white: $white;
+	--bs-white-rgb: #{red($white)}, #{green($white)}, #{blue($white)};
+
+	.btn-edit,
+	.btn-password {
+		background: $gray-200 !important;
+		border: 1px solid $gray-200 !important;
+	}
 }
 
 [data-bs-theme="dark"] {
@@ -23,8 +39,26 @@ $gray-500: #adb5bd;
 	$secondary: #212529;
 	--bs-secondary: $secondary;
 	--bs-secondary-rgb: #{red($secondary)}, #{green($secondary)}, #{blue($secondary)};
+	$light: #212529;
+	--bs-light: $light;
+	--bs-light-rgb: #{red(#212529)}, #{green(#212529)}, #{blue(#212529)};
 	--bs-card-bg: #181b1d;
 	--bs-dark-rgb: #{red(#181b1d)}, #{green(#181b1d)}, #{blue(#181b1d)};
+	$black: white;
+	--bs-black: $black;
+	--bs-black-rgb: #{red($black)}, #{green($black)}, #{blue($black)};
+	--bs-info: #adb5bd;
+	--bs-info-rgb: #{red(#adb5bd)}, #{green(#adb5bd)}, #{blue(#adb5bd)};
+	$white: #181b1d;
+	--bs-white: $white;
+	--bs-white-rgb: #{red($white)}, #{green($white)}, #{blue($white)};
+
+	.btn-edit,
+	.btn-password {
+		background: #adb5bd !important;
+		border: 1px solid #adb5bd !important;
+		color: black;
+	}
 }
 
 /* main styling */
@@ -93,20 +127,21 @@ input:focus {
 	height: 100px;
 }
 
-.btn-edit,
-.btn-password {
-	background: $gray-200 !important;
-	border: 1px solid $gray-200 !important;
-}
-
 .username,
 .btn-edit,
 .btn-password {
 	width: fit-content !important;
 }
 
-.row {
+.user-posts > .row {
 	--bs-gutter-x: 0rem !important;
+}
+
+/* profile settings styling */
+
+.profile-settings-img {
+	width: 60px;
+	height: 60px;
 }
 
 /* profile posts styling */

@@ -21,7 +21,7 @@
 			class="m-0 rounded-0"><code id="code-block" class="language-{{ snippet.language }}">{{ snippet.code }}</code></pre>
 	</div>
 	<div class="card-body p-0">
-		<div class="likes d-flex px-3 pt-3">
+		<div class="likes d-flex px-3 pt-3 mb-2">
 			<form action="/like/add" method="post" class="d-flex align-items-center">
 				<input type="hidden" name="snippet_id" value="{{ snippet.id }}" />
 				<button type="submit" class="btn btn-link p-0 border-0 rounded-0">
@@ -48,18 +48,18 @@
 					</a>
 					<p id="comment" class="mb-0">{{ snippet.caption }}</p>
 				</div>
-				<small class="m-0 text-secondary">{{ snippet.current_time | upper }}</small>
+				<small class="m-0 text-info">{{ snippet.current_time | upper }}</small>
 			</div>
 			<div id="comments-{{ snippet.id }}"></div>
 			{% if snippet.comments|length > 0 %}
 			<button
-				class="btn btn-link border-0 p-0 text-secondary fw-bold text-decoration-none show-more-comments"
+				class="btn btn-link border-0 p-0 text-info fw-bold text-decoration-none show-more-comments"
 				data-snippet-id="{{ snippet.id }}">
 				<small>Show more comments</small>
 				<small><i class="bi bi-chevron-down me-3"></i></small>
 			</button>
 			<button
-				class="btn btn-link border-0 p-0 text-secondary fw-bold text-decoration-none hide-comments d-none"
+				class="btn btn-link border-0 p-0 text-info fw-bold text-decoration-none hide-comments d-none"
 				data-snippet-id="{{ snippet.id }}">
 				<small>Hide comments</small>
 				<small><i class="bi bi-chevron-up"></i></small>

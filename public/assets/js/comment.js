@@ -26,31 +26,40 @@ document.addEventListener("DOMContentLoaded", () => {
 		}
 
 		try {
-			const response = await fetch(`/comment?snippet_id=${snippetId}&offset=${commentsState[snippetId]}&limit=2`);
+			const limit = 2;
+			const response = await fetch(
+				`/comment?snippet_id=${snippetId}&offset=${commentsState[snippetId]}&limit=${limit}`
+			);
+
 			if (!response.ok) {
 				throw new Error("Failed to fetch comments");
 			}
 
-			const comments = await response.json();
+			const data = await response.json();
+			const comments = data.comments || [];
 
 			comments.forEach((comment) => {
+				const hasPfp = comment.pfp && comment.pfp.trim() !== "";
+				const theme = localStorage.getItem("theme") || "light";
+				const defaultPfp = `/assets/icons/${theme}/profile-user.png`;
+				const pfpSrc = hasPfp ? `/assets/uploads/${comment.pfp}` : defaultPfp;
 				commentsDiv.innerHTML += `
-				<div class="comment mb-1">
+				<div class="comment mb-2">
 					<div class="d-flex">
 						<a href="/user/profile/${comment.user_id}" class="d-flex align-items-center text-decoration-none text-black">
-							<img src="/assets/images/profile-user.png" alt="User" class="comment-icon me-2" />
+							<img src="${pfpSrc}" alt="User" class="icon theme-icon me-2 rounded-circle" />
 							<b class="me-2 mb-0">${comment.username}</b>
 						</a>
 						<p class="m-0">${comment.comment}</p>
 					</div>
-					<small class="text-secondary">${comment.created_at.toUpperCase()}</small>
+					<small class="text-info">${comment.created_at.toUpperCase()}</small>
 				</div>
 				`;
 			});
 
 			commentsState[snippetId] += comments.length;
 
-			if (comments.length < 2) {
+			if (commentsState[snippetId] >= data.total) {
 				showMoreButton.classList.add("d-none");
 			}
 

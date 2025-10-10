@@ -5,7 +5,8 @@ document.addEventListener("DOMContentLoaded", () => {
 		{ name: "HTML", value: "html" },
 		{ name: "CSS", value: "css" },
 		{ name: "JavaScript", value: "js" },
-		{ name: "PHP", value: "js" },
+		{ name: "PHP", value: "php" },
+		{ name: "Twig", value: "twig " },
 	];
 
 	languages.forEach((lang) => {

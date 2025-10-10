@@ -5,6 +5,7 @@ namespace Binsta\Controllers;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Binsta\Models\Comment;
+use Binsta\Models\User;
 
 class CommentController extends BaseController
 {
@@ -35,6 +36,7 @@ class CommentController extends BaseController
         }
 
         $comments = Comment::findBySnippetId($snippetId, $limit, $offset);
+        $totalComments = Comment::countBySnippetId($snippetId);
 
         if (empty($comments)) {
             header('Content-Type: application/json');
@@ -45,16 +47,22 @@ class CommentController extends BaseController
         $formattedComments = [];
         foreach ($comments as $comment) {
             $comment->created_at = $this->timeAgo(new \DateTime($comment->created_at));
+            $user = User::findById($comment->author->id);
+
             $formattedComments[] = [
                 'user_id' => $comment->author->id,
                 'username' => $comment->author->username,
+                'pfp' => $user->pfp,
                 'comment' => $comment->comment,
                 'created_at' => $comment->created_at,
             ];
         }
 
         header('Content-Type: application/json');
-        echo json_encode($formattedComments);
+        echo json_encode([
+            'comments' => $formattedComments,
+            'total' => $totalComments,
+        ]);
         exit;
     }
 }

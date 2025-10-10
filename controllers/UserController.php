@@ -41,50 +41,88 @@ class UserController extends BaseController
         $user = User::findById($id);
         $userProfile = User::findById($_SESSION['user']);
 
+        $message = $_SESSION['flash_message'] ?? null;
+        $error = $_SESSION['flash_error'] ?? null;
+        unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+
         renderPage('users/edit.twig', [
             'title' => 'Edit profile',
             'user' => $user,
             'userProfile' => $userProfile,
+            'message' => $message,
+            'error' => $error,
         ]);
     }
 
     public function editPost()
     {
+        $this->authorizeUser();
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $parts = explode('/', trim($path, '/'));
+        $id = end($parts);
+
         $userId = $_SESSION['user'];
 
         $data = [
             'username' => $_POST['username'] ?? null,
-            'email'    => $_POST['email'] ?? null,
-            'bio'      => $_POST['bio'] ?? null,
+            'name' => $_POST['name'] ?? null,
+            'email' => $_POST['email'] ?? null,
+            'bio' => $_POST['bio'] ?? null,
             'remove_pfp' => $_POST['remove_pfp'] ?? 0
         ];
 
         $result = User::update($userId, $data, $_FILES['pfp'] ?? null);
 
         if ($result) {
-            header('Location: /');
-            exit;
+            $_SESSION['flash_message'] = 'Updated profile successfully';
+            $_SESSION['flash_error'] = 'success';
         } else {
-            renderPage('users/edit.twig', [
-                'title' => 'Edit Profile',
-                'error' => 'Failed to update profile'
-            ]);
+            $_SESSION['flash_message'] = 'Failed to update profile';
+            $_SESSION['flash_error'] = 'danger';
         }
+
+        header("Location: /user/edit/$userId");
+        exit;
     }
 
-    public function removePhoto()
+    public function password()
     {
-        $userId = $_SESSION['user'];
+        $this->authorizeUser();
+        $user = R::load('users', $_SESSION['user']);
 
-        if (!$userId) {
-            header('Location: /login');
-            exit;
+        renderPage('users/change_password.twig', [
+            'title' => 'Change Password',
+            'user' => $user,
+        ]);
+    }
+
+    public function passwordpost()
+    {
+        $this->authorizeUser();
+        $user = R::load('users', $_SESSION['user']);
+
+        $currentPassword = $_POST['current_password'] ?? '';
+        $newPassword = $_POST['new_password'] ?? '';
+        $confirmPassword = $_POST['confirm_password'] ?? '';
+
+        if (!password_verify($currentPassword, $user->password)) {
+            $message = 'Current password is incorrect.';
+            $error = 'danger';
+        } elseif ($newPassword !== $confirmPassword) {
+            $message = 'New password and confirmation do not match.';
+            $error = 'danger';
+        } else {
+            $user->password = password_hash($newPassword, PASSWORD_DEFAULT);
+            R::store($user);
+            $message = 'Password changed successfully!';
+            $error = 'success';
         }
 
-        User::removePhoto($userId);
-
-        // Redirect back to the edit/profile page
-        header('Location: /user/edit');
-        exit;
+        renderPage('users/change_password.twig', [
+            'title' => 'Change Password',
+            'user' => $user,
+            'message' => $message,
+            'error' => $error,
+        ]);
     }
 }

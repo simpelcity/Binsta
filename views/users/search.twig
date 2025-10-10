@@ -5,7 +5,11 @@
 <div class="card my-4" id="user-{{ user.id }}">
 	<div class="d-flex p-3 align-items-center">
 		<a href="/user/profile/{{ user.id }}" class="d-flex align-items-center text-decoration-none text-black">
-			<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
+			{% if user.pfp %}
+			<img src="/assets/uploads/{{ user.pfp }}" alt="User" class="nav-icon me-2 rounded-circle" />
+			{% else %}
+			<img src="/assets/icons/light/profile-user.png" alt="User" class="nav-icon me-2 theme-icon" />
+			{% endif %}
 			<p class="m-0 fw-bold">{{ user.username }}</p>
 		</a>
 	</div>

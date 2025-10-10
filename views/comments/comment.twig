@@ -1,6 +1,6 @@
 {% for comment in snippet.comments %}
 <div class="d-flex mb-1">
-	<a href="/user/profile/{{ comment.author.id }}" class="d-flex align-items-center text-decoration-none text-black">
+	<a href="/user/profile/{{ comment.author.id }}" class="d-flex align-items-center text-decoration-none">
 		<img src="/assets/images/profile-user.png" alt="User" class="nav-icon me-2" />
 		<b class="me-2 mb-0">{{ comment.author.username }}</b>
 	</a>

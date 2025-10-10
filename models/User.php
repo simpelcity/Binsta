@@ -35,13 +35,15 @@ class User
         $user = R::load('users', $id);
         if (!$user->id) return false;
 
+        $uploadDir = __DIR__ . '/../public/assets/uploads/';
+
         // Handle image upload
         if ($file && !empty($file['name'])) {
+            $filePath = $uploadDir . basename($file['name']);
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
-            $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
+            $fileType = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
-            if (in_array($ext, $allowed)) {
-                $uploadDir = 'assets/uploads/';
+            if (in_array($fileType, $allowed)) {
                 if (!is_dir($uploadDir)) {
                     mkdir($uploadDir, 0755, true);
                 }
@@ -50,14 +52,20 @@ class User
                     unlink($uploadDir . $user->pfp);
                 }
 
-                $fileName = uniqid('pfp_') . '.' . $ext;
-                $filePath = $uploadDir . $fileName;
-
-
                 if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                    $user->pfp = $fileName; // store filename only
+                    $user->pfp = $file['name']; // store filename only
+                } else {
+                    error_log("Upload failed: Could not move file to $filePath");
                 }
             }
+        }
+
+        // Handle profile picture removal
+        if (!empty($data['remove_pfp'])) {
+            if (!empty($user->pfp) && file_exists($uploadDir . $user->pfp)) {
+                unlink($uploadDir . $user->pfp);
+            }
+            $user->pfp = null;
         }
 
         // Update text fields
@@ -68,23 +76,6 @@ class User
         }
 
         return R::store($user);
-    }
-
-    public static function removePhoto($id)
-    {
-        $user = R::load('users', $id);
-        if (!$user->id) return false;
-
-        $uploadDir = 'assets/uploads/';
-
-        if (!empty($user->pfp) && file_exists($uploadDir . $user->pfp)) {
-            unlink($uploadDir . $user->pfp);
-        }
-
-        $user->pfp = null;
-        R::store($user);
-
-        return true;
     }
 
     public static function findUserSnippets($userId)
