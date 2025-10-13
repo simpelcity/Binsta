@@ -1,22 +1,31 @@
 {% extends '/layouts/app.twig' %} {% block content %}
-<div class="pt-5 w-75 mx-auto">
-	<div class="user-profile col-12 d-flex mb-5">
-		<div class="profile-picture col-2">
+<div class="pt-5 col-12 col-md-10 mx-auto">
+	<div class="user-profile d-flex flex-column flex-md-row align-items-center text-center py-4">
+		<div class="profile-picture mb-3 mb-md-0 me-md-3">
 			{% if user.pfp %}
-			<img src="/assets/uploads/{{ user.pfp }}" alt="Profile picture" class="profile-img rounded-circle" />
+			<img
+				src="/assets/uploads/{{ user.pfp }}"
+				alt="Profile picture"
+				class="profile-img rounded-circle shadow-sm" />
 			{% else %}
-			<img src="/assets/icons/light/profile-user.png" alt="Profile Picture" class="profile-img theme-icon" />
+			<img
+				src="/assets/icons/light/profile-user.png"
+				alt="Profile Picture"
+				class="profile-img rounded-circle shadow-sm" />
 			{% endif %}
 		</div>
-		<div class="user-info col-10">
-			<div class="row mb-2">
-				<h3 class="username fw-bold mb-0 me-4 p-0">{{ user.username }}</h3>
+
+		<div class="user-info">
+			<div class="d-flex flex-column align-items-center flex-md-row gap-3">
+				<h3 class="username fw-bold mb-0">{{ user.username }}</h3>
 				{% if userProfile.id == user.id %}
-				<a href="/user/edit/{{ user.id }}" class="btn btn-edit fw-bold me-4">Edit Profile</a>
-				<a href="/user/password" class="btn btn-password fw-bold me-4">Change Password</a>
+				<div class="btn-group d-flex justify-content-center flex-wrap gap-2 mb-3">
+					<a href="/user/edit/{{ user.id }}" class="btn btn-edit btn-sm fw-bold px-3">Edit Profile</a>
+					<a href="/user/password" class="btn btn-password btn-sm fw-bold px-3">Change Password</a>
+				</div>
 				{% endif %}
 			</div>
-			<div class="row">
+			<div class="d-flex flex-column text-center text-md-start">
 				{% if user.name is not empty %}
 				<p class="name mb-1">{{ user.name }}</p>
 				{% endif %} {% if user.bio is not empty %}
@@ -31,7 +40,7 @@
 		{% if snippets|length > 0 %}
 		<div class="row">
 			{% for snippet in snippets %}
-			<div class="col-4">
+			<div class="col-6 col-md-4">
 				<div class="card card-snippet">
 					<a href="/#snippet-{{ snippet.id }}" class="snippet-link">
 						<pre

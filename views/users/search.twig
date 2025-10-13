@@ -1,8 +1,8 @@
 {% extends '/layouts/app.twig' %} {% block content %}
-<h1 class="mt-4">Search Results for "{{ searchTerm }}"</h1>
+<h1 class="my-4">Search Results for "{{ searchTerm }}"</h1>
 
 {% if users|length > 0 %} {% for user in users %}
-<div class="card my-4" id="user-{{ user.id }}">
+<div class="card my-2" id="user-{{ user.id }}">
 	<div class="d-flex p-3 align-items-center">
 		<a href="/user/profile/{{ user.id }}" class="d-flex align-items-center text-decoration-none text-black">
 			{% if user.pfp %}
