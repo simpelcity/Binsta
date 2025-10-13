@@ -57,9 +57,6 @@ class UserController extends BaseController
     public function editPost()
     {
         $this->authorizeUser();
-        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-        $parts = explode('/', trim($path, '/'));
-        $id = end($parts);
 
         $userId = $_SESSION['user'];
 
@@ -88,41 +85,52 @@ class UserController extends BaseController
     public function password()
     {
         $this->authorizeUser();
-        $user = R::load('users', $_SESSION['user']);
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $parts = explode('/', trim($path, '/'));
+        $id = end($parts);
+        $user = User::findById($id);
+        $userProfile = User::findById($_SESSION['user']);
+
+        $message = $_SESSION['flash_message'] ?? null;
+        $error = $_SESSION['flash_error'] ?? null;
+        unset($_SESSION['flash_message'], $_SESSION['flash_error']);
 
         renderPage('users/change_password.twig', [
             'title' => 'Change Password',
             'user' => $user,
+            'userProfile' => $userProfile,
+            'message' => $message,
+            'error' => $error,
         ]);
     }
 
     public function passwordpost()
     {
         $this->authorizeUser();
-        $user = R::load('users', $_SESSION['user']);
+        $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+        $parts = explode('/', trim($path, '/'));
+        $id = end($parts);
+        $user = User::findById($id);
+        $userProfile = User::findById($_SESSION['user']);
 
         $currentPassword = $_POST['current_password'] ?? '';
         $newPassword = $_POST['new_password'] ?? '';
         $confirmPassword = $_POST['confirm_password'] ?? '';
 
-        if (!password_verify($currentPassword, $user->password)) {
-            $message = 'Current password is incorrect.';
-            $error = 'danger';
+        if (!password_verify($currentPassword, $userProfile->password)) {
+            $_SESSION['flash_message'] = 'Current password is incorrect.';
+            $_SESSION['flash_error'] = 'danger';
         } elseif ($newPassword !== $confirmPassword) {
-            $message = 'New password and confirmation do not match.';
-            $error = 'danger';
+            $_SESSION['flash_message'] = 'New password and confirmation do not match.';
+            $_SESSION['flash_error'] = 'danger';
         } else {
-            $user->password = password_hash($newPassword, PASSWORD_DEFAULT);
-            R::store($user);
-            $message = 'Password changed successfully!';
-            $error = 'success';
+            $userProfile->password = password_hash($newPassword, PASSWORD_DEFAULT);
+            R::store($userProfile);
+            $_SESSION['flash_message'] = 'Password changed successfully!';
+            $_SESSION['flash_error'] = 'success';
         }
 
-        renderPage('users/change_password.twig', [
-            'title' => 'Change Password',
-            'user' => $user,
-            'message' => $message,
-            'error' => $error,
-        ]);
+        header("Location: /user/password/$id");
+        exit;
     }
 }

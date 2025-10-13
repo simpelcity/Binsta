@@ -11877,6 +11877,35 @@ textarea.form-control-lg {
   background: #e9ecef !important;
   border: 1px solid #e9ecef !important;
 }
+:root .btn-edit:hover,
+:root .btn-password:hover,
+[data-bs-theme=light] .btn-edit:hover,
+[data-bs-theme=light] .btn-password:hover {
+  background: #dee2e6 !important;
+  border: 1px solid #dee2e6 !important;
+}
+:root .dropdown-item:hover,
+[data-bs-theme=light] .dropdown-item:hover {
+  background-color: #dee2e6;
+  color: black;
+}
+:root .dropdown > .btn:active,
+[data-bs-theme=light] .dropdown > .btn:active {
+  color: black;
+}
+:root #btn-top,
+[data-bs-theme=light] #btn-top {
+  color: #f5f5f5;
+  background: #0d6efd;
+}
+:root #btn-top:hover,
+[data-bs-theme=light] #btn-top:hover {
+  background: #212529;
+}
+:root .links a,
+[data-bs-theme=light] .links a {
+  color: black;
+}
 
 [data-bs-theme=dark] {
   --bs-body-bg: #212529;
@@ -11900,6 +11929,29 @@ textarea.form-control-lg {
   border: 1px solid #adb5bd !important;
   color: black;
 }
+[data-bs-theme=dark] .btn-edit:hover,
+[data-bs-theme=dark] .btn-password:hover {
+  background: #6c757d !important;
+  border: 1px solid #6c757d !important;
+}
+[data-bs-theme=dark] .dropdown-item:hover {
+  background-color: #6c757d;
+  color: white;
+}
+[data-bs-theme=dark] .dropdown > .btn:active {
+  color: white;
+}
+[data-bs-theme=dark] #btn-top {
+  color: #212529;
+  background: #0d6efd;
+}
+[data-bs-theme=dark] #btn-top:hover {
+  color: #212529;
+  background: #f5f5f5;
+}
+[data-bs-theme=dark] .links a {
+  color: white;
+}
 
 /* main styling */
 .logo-nav,
@@ -11915,18 +11967,33 @@ textarea.form-control-lg {
   font-weight: bold;
 }
 
+#eyeicon:hover,
+#eyeicon1:hover,
+#eyeicon2:hover,
+#eyeicon3:hover {
+  cursor: pointer;
+}
+
 body {
   transition: background-color 0.3s, color 0.3s;
 }
 
-body.dark-theme {
-  background-color: #121212 !important;
-  color: white !important;
+hr {
+  margin: 0.5rem 0;
 }
 
 /* active input styling */
 input:focus {
   box-shadow: none !important;
+}
+
+#btn-top {
+  bottom: 0;
+  right: 0;
+}
+
+#btn-top:hover {
+  color: white;
 }
 
 /* login styling */
@@ -11955,6 +12022,10 @@ input:focus {
   height: 25px;
 }
 
+.card > .p-3 > a {
+  width: fit-content;
+}
+
 /* profile page styling */
 .profile-img {
   width: 100px;
@@ -11965,6 +12036,11 @@ input:focus {
 .btn-edit,
 .btn-password {
   width: fit-content !important;
+}
+
+.btn-edit:active,
+.btn-password:active {
+  color: black !important;
 }
 
 .user-posts > .row {
@@ -12032,6 +12108,12 @@ input:focus {
   .login-img {
     width: 90%;
     height: 60%;
+  }
+}
+@media (min-height: 992px) {
+  .login-img {
+    height: 650px;
+    width: 90%;
   }
 }
 

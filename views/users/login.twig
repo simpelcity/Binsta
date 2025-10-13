@@ -6,8 +6,8 @@
 		</div>
 	</div>
 	<div
-		class="col-12 col-lg-4 col-xl-5 d-flex justify-content-center justify-content-xl-start align-items-md-center align-items-lg-start">
-		<div class="mt-5 mt-md-0 mt-lg-5">
+		class="col-12 col-lg-4 col-xl-5 d-flex justify-content-center justify-content-xl-start align-items-center align-items-lg-start">
+		<div class="mt-md-0 mt-lg-5">
 			<div class="login-form border bg-white p-4 mb-3">
 				<h1 class="logo mb-0 mt-2 d-flex justify-content-center">Binsta</h1>
 				<form action="/auth/login" method="post">
@@ -20,7 +20,7 @@
 									name="email"
 									placeholder="Email address" />
 							</div>
-							<div class="input-box border rounded-1 bg-light d-flex align-items-center">
+							<div class="input-box border rounded-1 d-flex align-items-center">
 								<input
 									type="password"
 									class="form-control border-0 rounded-1 py-2 bg-light"
@@ -33,7 +33,7 @@
 						{% if error %}
 						<div class="alert alert-danger text-danger">{{ error }}</div>
 						{% endif %}
-						<button type="submit" name="login" class="btn btn-primary w-100 text-white">Log in</button>
+						<button type="submit" name="login" class="btn btn-primary w-100">Log in</button>
 					</div>
 				</form>
 			</div>
