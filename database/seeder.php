@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use RedBeanPHP\R as R;
 
-$host = 'localhost';
+$host = '127.0.0.1';
 $dbname = 'binsta';
 $username = 'bit_academy';
 $password = 'bit_academy';
@@ -30,18 +30,28 @@ R::setup(
     $password
 );
 
+
 $users = [
     [
         'username' => 'Simpelcity',
-        'email' => 'wietse2007.3@gmail.com',
-        'password' => password_hash('admin', PASSWORD_BCRYPT)
+        'email' => 'simpelcity@example.com',
+        'password' => password_hash('admin', PASSWORD_BCRYPT),
+    ],
+    [
+        'username' => 'BitAcademy',
+        'email' => 'bitacademy@example.com',
+        'password' => password_hash('bit_academy', PASSWORD_BCRYPT),
     ]
 ];
 
-// R::wipe('users');
-// R::wipe('snippets');
-// R::wipe('likes');
-// R::wipe('comments');
+R::exec('SET FOREIGN_KEY_CHECKS = 0;');
+
+R::wipe('comments');
+R::wipe('likes');
+R::wipe('snippets');
+R::wipe('users');
+
+R::exec('SET FOREIGN_KEY_CHECKS = 1;');
 
 foreach ($users as $data) {
     $user = R::dispense('users');
@@ -51,38 +61,13 @@ foreach ($users as $data) {
     R::store($user);
 }
 
-// $kitchenBeans = [];
-// foreach ($kitchens as $data) {
-//     $kitchen = R::dispense('kitchens');
-//     $kitchen->name = $data['name'];
-//     $kitchen->description = $data['description'];
-//     $id = R::store($kitchen);
-//     $kitchenBeans[] = $id;
-// }
-
-// foreach ($recipes as $data) {
-//     $recipe = R::dispense('recipes');
-//     $recipe->name = $data['name'];
-//     $recipe->type = $data['type'];
-//     $recipe->level = $data['level'];
-//     $recipe->kitchens_id = $data['kitchens_id'];
-//     R::store($recipe);
-// }
-
-// foreach ($users as $data) {
-//     $user = R::dispense('users');
-//     $user->username = $data['username'];
-//     $user->password = $data['password'];
-//     R::store($user);
-// }
-
 $all = [
     ['type' => 'user', 'items' => $users, 'label' => 'user'],
 ];
 
-// foreach ($all as $group) {
-//     echo "Wiped table " . $group['type'] . PHP_EOL;
-// }
+foreach ($all as $group) {
+    echo "Wiped table " . $group['type'] . PHP_EOL;
+}
 
 foreach ($all as $group) {
     $count = count($group['items']);

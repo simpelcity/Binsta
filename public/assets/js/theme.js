@@ -56,7 +56,6 @@
 		});
 	}
 
-	// Apply saved theme
 	setTheme(getPreferredTheme());
 
 	const showActiveTheme = (theme, focus = false) => {
@@ -66,7 +65,6 @@
 		const activeIcon = document.querySelector(".theme-icon-active");
 		const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`);
 
-		// Update all buttons
 		document.querySelectorAll("[data-bs-theme-value]").forEach((element) => {
 			element.classList.remove("active");
 			element.setAttribute("aria-pressed", "false");
@@ -75,7 +73,6 @@
 		btnToActive.classList.add("active");
 		btnToActive.setAttribute("aria-pressed", "true");
 
-		// Update button icons
 		const icon = btnToActive.querySelector(".theme-icon").cloneNode(true);
 		icon.classList.remove("me-2");
 		activeIcon.replaceWith(icon);
@@ -85,7 +82,6 @@
 		if (focus) themeSwitcher.focus();
 	};
 
-	// Update theme automatically if system preference changes and user chose “auto”
 	window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
 		const storedTheme = getStoredTheme();
 		if (storedTheme === "auto") {
@@ -94,7 +90,6 @@
 	});
 
 	window.addEventListener("DOMContentLoaded", () => {
-		// Use stored theme, not system preference
 		const currentTheme = getStoredTheme() || getPreferredTheme();
 		showActiveTheme(currentTheme);
 
@@ -108,7 +103,6 @@
 		});
 	});
 
-	// Watch for manual theme changes
 	const observer = new MutationObserver(() => {
 		const newTheme = document.documentElement.getAttribute("data-bs-theme");
 		updateIconsForTheme(newTheme);

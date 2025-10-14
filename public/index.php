@@ -23,6 +23,8 @@ if ($controllerName === 'Binsta\Controllers\AuthController') {
     $method = isset($parts[1]) && $parts[1] !== '' ? $parts[1] : 'index';
 }
 
+$method = str_replace('-', '_', $method);
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $method .= 'post';
 }

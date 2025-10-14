@@ -12,7 +12,10 @@ CREATE TABLE `users` (
     `name` VARCHAR(100) NULL,
     `bio` TEXT NULL,
     `pfp` VARCHAR(100) NULL,
-    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP
+    `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+    `remove_pfp` TINYINT(3) NULL,
+    `reset_token` VARCHAR(255) NULL,
+    `token_expiration` DATETIME NULL
 );
 
 CREATE TABLE `snippets` (
@@ -31,14 +34,14 @@ CREATE TABLE `comments` (
     `user_id` INT NOT NULL,
     `comment` TEXT NOT NULL,
     `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (`snippet_id`) REFERENCES `snippets` (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+    FOREIGN KEY (`snippet_id`) REFERENCES `snippets` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 );
 
 CREATE TABLE `likes` (
     `id` INT PRIMARY KEY AUTO_INCREMENT,
     `snippet_id` INT NOT NULL,
     `user_id` INT NOT NULL,
-    FOREIGN KEY (`snippet_id`) REFERENCES `snippets` (`id`),
-    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
+    FOREIGN KEY (`snippet_id`) REFERENCES `snippets` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 );

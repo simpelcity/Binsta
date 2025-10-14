@@ -6,6 +6,9 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Binsta\Models\User;
 use RedBeanPHP\R;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 
 class UserController extends BaseController
 {
@@ -82,7 +85,7 @@ class UserController extends BaseController
         exit;
     }
 
-    public function password()
+    public function change_password()
     {
         $this->authorizeUser();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -104,13 +107,12 @@ class UserController extends BaseController
         ]);
     }
 
-    public function passwordpost()
+    public function change_passwordpost()
     {
         $this->authorizeUser();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $parts = explode('/', trim($path, '/'));
         $id = end($parts);
-        $user = User::findById($id);
         $userProfile = User::findById($_SESSION['user']);
 
         $currentPassword = $_POST['current_password'] ?? '';
@@ -132,5 +134,150 @@ class UserController extends BaseController
 
         header("Location: /user/password/$id");
         exit;
+    }
+
+    public function forgot_password()
+    {
+        $message = $_SESSION['flash_message'] ?? null;
+        $error = $_SESSION['flash_error'] ?? null;
+        unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+
+        if (!empty($_SESSION)) {
+            header('Location: /');
+            exit;
+        }
+
+        renderPage('users/forgot_password.twig', [
+            'title' => 'Forgot Password',
+            'message' => $message,
+            'error' => $error,
+        ]);
+    }
+
+    public function forgot_passwordPost()
+    {
+        $email = $_POST['email'] ?? '';
+
+        if (!$email) {
+            $_SESSION['flash_message'] = 'Please enter your email.';
+            $_SESSION['flash_error'] = 'danger';
+            header("Location: /user/forgot-password");
+            exit;
+        }
+
+        $token = User::createResetToken($email);
+
+        if ($token) {
+            $resetLink = "<PATH/TO/THE/PROJECT>/user/reset-password?token=$token";
+
+            if ($this->sendMail($email, "Reset your password", "Click this link to reset your password:$resetLink")) {
+                $_SESSION['flash_message'] = 'A password reset link has been sent to your email.';
+                $_SESSION['flash_error'] = 'success';
+            } else {
+                $_SESSION['flash_message'] = 'Failed to send reset email. Please try again later.';
+                $_SESSION['flash_error'] = 'danger';
+            }
+
+
+            $_SESSION['flash_message'] = 'A password reset link has been sent to your email.';
+            $_SESSION['flash_error'] = 'success';
+        } else {
+            $_SESSION['flash_message'] = 'No user found with that email.';
+            $_SESSION['flash_error'] = 'danger';
+        }
+
+        header("Location: /user/forgot-password");
+        exit;
+    }
+
+    public function reset_password()
+    {
+        $token = $_GET['token'] ?? '';
+        $user = User::findByResetToken($token);
+
+        if (!$user) {
+            $_SESSION['flash_message'] = 'Invalid or expired reset token.';
+            $_SESSION['flash_error'] = 'danger';
+            header("Location: /user/forgot-password");
+            exit;
+        }
+
+        renderPage('users/reset_password.twig', [
+            'title' => 'Reset Password',
+            'token' => $token
+        ]);
+    }
+
+    public function reset_passwordPost()
+    {
+        $token = $_POST['token'] ?? '';
+
+        $password = $_POST['new_password'] ?? '';
+        $confirm = $_POST['confirm_password'] ?? '';
+
+        if ($password !== $confirm) {
+            $_SESSION['flash_message'] = 'Passwords do not match.';
+            $_SESSION['flash_error'] = 'danger';
+            header("Location: /user/reset-password?token=$token");
+            exit;
+        }
+
+        $result = User::resetPassword($token, $password);
+
+        if ($result) {
+            $_SESSION['flash_message'] = 'Password reset successful. You can now log in.';
+            $_SESSION['flash_error'] = 'success';
+
+            renderPage('users/reset_successfull.twig', [
+                'title' => 'Reset Successfull',
+                'session' => $_SESSION,
+            ]);
+            unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+            exit;
+        } else {
+            $_SESSION['flash_message'] = 'Invalid or expired token.';
+            $_SESSION['flash_error'] = 'danger';
+            header("Location: /user/forgot-password");
+        }
+
+        exit;
+    }
+
+    public function sendMail($toEmail, $subject, $body)
+    {
+        $mail = new PHPMailer(true);
+
+        try {
+            $mail->SMTPDebug = 2;
+            $mail->isSMTP();
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = '<YOUR_EMAIL_ADDRESS>';
+            $mail->Password = '<YOUR_GMAIL_APP_PASSWORD>';
+            $mail->SMTPSecure = 'ssl';
+            $mail->Port = 465;
+            $mail->SMTPOptions = [
+                'ssl' => [
+                    'verify_peer' => false,
+                    'verify_peer_name' => false,
+                    'allow_self_signed' => true
+                ]
+            ];
+
+            // Sender & recipient
+            $mail->setFrom('<YOUR_EMAIL_ADDRESS>', 'Mail');
+            $mail->addAddress($toEmail);
+
+            // Content
+            $mail->isHTML(true);
+            $mail->Subject = $subject;
+            $mail->Body = $body;
+
+            $mail->send();
+            return true;
+        } catch (Exception $e) {
+            error_log("Email sending failed: {$mail->ErrorInfo}");
+            return false;
+        }
     }
 }

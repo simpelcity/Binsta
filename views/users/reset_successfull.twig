@@ -1,0 +1,6 @@
+{% extends "/layouts/auth.twig" %} {% block content %}
+<div class="pt-5 px-3 text-center col-12 col-md-7 col-lg-4 mx-auto">
+	<div class="alert alert-{{ session.flash_error }}">{{ session.flash_message }}</div>
+	<a href="/" class="btn btn-primary">Go to Login</a>
+</div>
+{% endblock %}

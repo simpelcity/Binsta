@@ -37,7 +37,6 @@ class User
 
         $uploadDir = __DIR__ . '/../public/assets/uploads/';
 
-        // Handle image upload
         if ($file && !empty($file['name'])) {
             $filePath = $uploadDir . basename($file['name']);
             $allowed = ['jpg', 'jpeg', 'png', 'gif'];
@@ -60,7 +59,6 @@ class User
             }
         }
 
-        // Handle profile picture removal
         if (!empty($data['remove_pfp'])) {
             if (!empty($user->pfp) && file_exists($uploadDir . $user->pfp)) {
                 unlink($uploadDir . $user->pfp);
@@ -68,7 +66,6 @@ class User
             $user->pfp = null;
         }
 
-        // Update text fields
         foreach ($data as $key => $value) {
             if (!empty($value)) {
                 $user->$key = $value;
@@ -81,5 +78,37 @@ class User
     public static function findUserSnippets($userId)
     {
         return R::findAll('snippets', 'user_id = ? ORDER BY created_at DESC', [$userId]);
+    }
+
+    public static function createResetToken($email)
+    {
+        $user = self::findByEmail($email);
+        if (!$user) return false;
+
+        $token = bin2hex(random_bytes(32));
+        $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
+
+        $user->reset_token = $token;
+        $user->reset_expires = $expires;
+        R::store($user);
+
+        return $token;
+    }
+
+    public static function findByResetToken($token)
+    {
+        return R::findOne('users', 'reset_token = ? AND reset_expires > NOW()', [$token]);
+    }
+
+    public static function resetPassword($token, $newPassword)
+    {
+        $user = self::findByResetToken($token);
+        if (!$user) return false;
+
+        $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
+        $user->reset_token = null;
+        $user->toke_expiration = null;
+        R::store($user);
+        return true;
     }
 }
