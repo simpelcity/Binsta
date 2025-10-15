@@ -12147,6 +12147,10 @@ select:focus {
   height: 40rem !important;
 }
 
+.user-posts > div > div {
+  max-height: 600px;
+}
+
 /* mobile navbar styling */
 @media (max-width: 992px) {
   [data-bs-theme=light] .links > div > a,
@@ -12234,13 +12238,6 @@ select:focus {
   .logo-nav {
     font-size: 3rem;
   }
-}
-#code-block {
-  font-size: small;
-}
-
-.user-posts > div > div {
-  max-height: 600px;
 }
 
 /*# sourceMappingURL=style.css.map */

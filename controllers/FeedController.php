@@ -14,7 +14,7 @@ class FeedController extends BaseController
     {
         $this->authorizeUser();
         $user = User::findById($_SESSION['user']);
-        $snippets = $this->findAll('snippets');
+        $snippets = $this->findAll('snippets', 'ORDER BY created_at DESC');
 
         foreach ($snippets as $snippet) {
             $snippet->currentTime = $this->timeAgo(new \DateTime($snippet->created_at));

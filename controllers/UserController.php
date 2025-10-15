@@ -168,7 +168,7 @@ class UserController extends BaseController
         $token = User::createResetToken($email);
 
         if ($token) {
-            $resetLink = "<PATH/TO/THE/PROJECT>/user/reset-password?token=$token";
+            $resetLink = "httpd://binsta.nexed.com/user/reset-password?token=$token";
 
             if ($this->sendMail($email, "Reset your password", "Click this link to reset your password:$resetLink")) {
                 $_SESSION['flash_message'] = 'A password reset link has been sent to your email.';
@@ -252,8 +252,8 @@ class UserController extends BaseController
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = '<YOUR_EMAIL_ADDRESS>';
-            $mail->Password = '<YOUR_GMAIL_APP_PASSWORD>';
+            $mail->Username = 'wietse2007.3@gmail.com';
+            $mail->Password = 'htcnwkczdxyrftog';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
             $mail->SMTPOptions = [
@@ -265,7 +265,7 @@ class UserController extends BaseController
             ];
 
             // Sender & recipient
-            $mail->setFrom('<YOUR_EMAIL_ADDRESS>', 'Mail');
+            $mail->setFrom('wietse2007.3@gmail.com', 'Mail');
             $mail->addAddress($toEmail);
 
             // Content
