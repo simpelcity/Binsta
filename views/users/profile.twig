@@ -1,7 +1,7 @@
 {% extends '/layouts/app.twig' %} {% block content %}
-<div class="pt-5 col-12 col-md-10 mx-auto">
+<div class="pt-5 col-12 col-lg-10 mx-auto">
 	<div class="user-profile d-flex flex-column flex-md-row align-items-center text-center py-4">
-		<div class="profile-picture mb-3 mb-md-0 me-md-3">
+		<div class="profile-picture mb-3 mb-md-0 me-md-4">
 			{% if user.pfp %}
 			<img
 				src="/assets/uploads/{{ user.pfp }}"
@@ -16,10 +16,10 @@
 		</div>
 
 		<div class="user-info">
-			<div class="d-flex flex-column align-items-center flex-md-row gap-3">
+			<div class="d-flex flex-column align-items-center align-items-md-start flex-md-row gap-3">
 				<h3 class="username fw-bold mb-0">{{ user.username }}</h3>
 				{% if userProfile.id == user.id %}
-				<div class="btn-group d-flex justify-content-center flex-wrap gap-2 mb-3">
+				<div class="btn-group d-flex justify-content-center flex-wrap gap-2 mb-3 mb-md-2">
 					<a href="/user/edit/{{ user.id }}" class="btn btn-edit btn-sm fw-bold px-3">Edit Profile</a>
 					<a href="/user/change-password" class="btn btn-password btn-sm fw-bold px-3">Change Password</a>
 				</div>
@@ -40,7 +40,7 @@
 		{% if snippets|length > 0 %}
 		<div class="row">
 			{% for snippet in snippets %}
-			<div class="col-6 col-md-4">
+			<div class="col-6 col-lg-4">
 				<div class="card card-snippet">
 					<a href="/#snippet-{{ snippet.id }}" class="snippet-link">
 						<pre

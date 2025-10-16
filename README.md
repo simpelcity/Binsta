@@ -23,14 +23,29 @@ Run the code in migrations.sql in phpmyadmin to create the database, also run th
 
 You have to change a couple of lines to make it work correctly,
 /controllers/UserController.php
-- line 171 you have to paste the path to the project,
 - lines 255 and 268 you have to insert your email address for the reset password function. 
 - line 256 you have to paste your google app password without spaces in between,
 - you need to have 2fa enabled on your google account to have access to app passwords. To make an app password, you have to go over to https://myaccount.google.com/apppasswords and create one with the name 'Mail' and paste the password without spaces on line 256.
 
 ### Notes
 
-Change the DocumentRoot and Directory in "httpd.conf" or "/extra/httpd-vhost.conf" to the /public folder, and restart your XAMPP modules. If you're on Linux, you have to give apache access and read/write permission to the uploads folder, to do this run these commands in your terminal
+### XAMPP vhost
+
+Add this to the end of your "httpd-vhost.conf" file
+
+```conf
+<VirtualHost *:80>
+  ServerName binsta.nexed.com
+  DocumentRoot "<PATH/TO/PROJECT>/public"
+  <Directory "<PATH/TO/PROJECT>/public">
+    Options +Indexes +Includes +FollowSymLinks +MultiViews
+    AllowOverride All
+    Require all granted
+  </Directory>
+</VirtualHost>
+```
+
+ and restart your XAMPP modules. If you're on Linux, you have to give apache access and read/write permission to the uploads folder, to do this run these commands in your terminal
 
 ```bash
 sudo chown -R daemon:daemon /path/to/project/public/assets/uploads  # Change owner to Apache
@@ -39,7 +54,7 @@ chmod 755 path/to/project/public/assets/uploads                     # Make reada
 
 to change permissions back to your user, run this command
 ```bash
-sudo chown -R $USER:$USER /path/to/project/public/assets/uploads
+sudo chown -R $USER:$USER /path/to/project/public/assets/uploads # Change owner back to your user
 ```
 
 example project path to uploads folder

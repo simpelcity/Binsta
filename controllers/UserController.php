@@ -252,23 +252,14 @@ class UserController extends BaseController
             $mail->isSMTP();
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
-            $mail->Username = 'wietse2007.3@gmail.com';
-            $mail->Password = 'htcnwkczdxyrftog';
+            $mail->Username = '<YOUR_GMAIL_ADDRESS>';
+            $mail->Password = '<YOUR_GOOGLE_APP_PASSWORD>';
             $mail->SMTPSecure = 'ssl';
             $mail->Port = 465;
-            $mail->SMTPOptions = [
-                'ssl' => [
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                ]
-            ];
 
-            // Sender & recipient
-            $mail->setFrom('wietse2007.3@gmail.com', 'Mail');
+            $mail->setFrom('<YOUR_GMAIL_ADDRESS>', 'Mail');
             $mail->addAddress($toEmail);
 
-            // Content
             $mail->isHTML(true);
             $mail->Subject = $subject;
             $mail->Body = $body;
