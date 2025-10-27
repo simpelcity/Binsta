@@ -27,13 +27,15 @@ $info: #6c757d;
 	--bs-white-rgb: #{red($white)}, #{green($white)}, #{blue($white)};
 
 	.btn-edit,
-	.btn-password {
+	.btn-password,
+	.btn-follow {
 		background: $gray-200 !important;
 		border: 1px solid $gray-200 !important;
 	}
 
 	.btn-edit:hover,
-	.btn-password:hover {
+	.btn-password:hover,
+	.btn-follow:hover {
 		background: #dee2e6 !important;
 		border: 1px solid #dee2e6 !important;
 	}
@@ -92,14 +94,16 @@ $info: #6c757d;
 	--bs-white-rgb: #{red($white)}, #{green($white)}, #{blue($white)};
 
 	.btn-edit,
-	.btn-password {
+	.btn-password,
+	.btn-follow {
 		background: #adb5bd !important;
 		border: 1px solid #adb5bd !important;
 		color: black;
 	}
 
 	.btn-edit:hover,
-	.btn-password:hover {
+	.btn-password:hover,
+	.btn-follow:hover {
 		background: #6c757d !important;
 		border: 1px solid #6c757d !important;
 	}
@@ -239,18 +243,17 @@ select:focus {
 /* profile page styling */
 
 .profile-img {
-	width: 100px;
-	height: 100px;
+	width: 117.59px;
+	height: 117.59px;
 }
 
-.username,
-.btn-edit,
-.btn-password {
+.username {
 	width: fit-content !important;
 }
 
 .btn-edit:active,
-.btn-password:active {
+.btn-password:active,
+.btn-follow:active {
 	color: black !important;
 }
 
@@ -419,6 +422,11 @@ select:focus {
 
 	.user-posts > div > div {
 		max-height: 300px !important;
+	}
+
+	.profile-img {
+		width: 100px;
+		height: 100px;
 	}
 }
 

@@ -45,3 +45,11 @@ CREATE TABLE `likes` (
     FOREIGN KEY (`snippet_id`) REFERENCES `snippets` (`id`) ON DELETE CASCADE,
     FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
 );
+
+CREATE TABLE `follows` (
+    `id` INT PRIMARY KEY AUTO_INCREMENT,
+    `follower_id` INT NOT NULL,
+    `followee_id` INT NOT NULL,
+    FOREIGN KEY (`follower_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+    FOREIGN KEY (`followee_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+)

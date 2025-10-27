@@ -46,4 +46,9 @@ class Snippet
     {
         return R::find('snippets', 'user_id = ?', [$userId]);
     }
+
+    public static function snippetCountByUserId($userId)
+    {
+        return R::count('snippets', 'user_id = ?', '$userId');
+    }
 }

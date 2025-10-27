@@ -35,6 +35,7 @@ R::exec('SET FOREIGN_KEY_CHECKS = 0;');
 R::wipe('comments');
 R::wipe('likes');
 R::wipe('snippets');
+R::wipe('follows');
 R::wipe('users');
 
 R::exec('SET FOREIGN_KEY_CHECKS = 1;');
@@ -401,11 +402,27 @@ foreach ($likes as $data) {
     R::store($like);
 }
 
+// --- FOLLOWS ---
+
+$follows = [
+    ['follower' => 'Simpelcity', 'followee' => 'future-tech-leader'],
+    ['follower' => 'Vinxy', 'followee' => 'Simpelcity'],
+    ['follower' => 'future-tech-leader', 'followee' => 'Vinxy'],
+];
+
+foreach ($follows as $data) {
+    $follow = R::dispense('follows');
+    $follow->follower_id = $userBeans[$data['follower']]->id;
+    $follow->followee_id = $userBeans[$data['followee']]->id;
+    R::store($follow);
+}
+
 $all = [
     ['type' => 'users', 'items' => $users, 'label' => 'user'],
     ['type' => 'snippets', 'items' => $snippets, 'label' => 'snippet'],
     ['type' => 'comments', 'items' => $comments, 'label' => 'comment'],
     ['type' => 'likes', 'items' => $likes, 'label' => 'like'],
+    ['type' => 'follows', 'items' => $follows, 'label' => 'follow'],
 ];
 
 foreach ($all as $group) {

@@ -111,4 +111,63 @@ class User
         R::store($user);
         return true;
     }
+
+    // Followers / Following
+    public static function isFollowing($followerId, $followeeId)
+    {
+        if (!$followerId || !$followeeId) return false;
+        $follow = R::findOne('follows', 'follower_id = ? AND followee_id = ?', [$followerId, $followeeId]);
+        return (bool) $follow;
+    }
+
+    public static function follow($followerId, $followeeId)
+    {
+        if (!$followerId || !$followeeId || $followerId == $followeeId) return false;
+        // Prevent duplicate
+        if (self::isFollowing($followerId, $followeeId)) return true;
+
+        $f = R::dispense('follows');
+        $f->follower_id = $followerId;
+        $f->followee_id = $followeeId;
+        return R::store($f);
+    }
+
+    public static function unfollow($followerId, $followeeId)
+    {
+        if (!$followerId || !$followeeId) return false;
+        $follow = R::findOne('follows', 'follower_id = ? AND followee_id = ?', [$followerId, $followeeId]);
+        if ($follow) {
+            R::trash($follow);
+            return true;
+        }
+        return false;
+    }
+
+    public static function toggleFollow($followerId, $followeeId)
+    {
+        if (self::isFollowing($followerId, $followeeId)) {
+            return self::unfollow($followerId, $followeeId);
+        }
+        return self::follow($followerId, $followeeId);
+    }
+
+    public static function followerCount($userId)
+    {
+        return R::count('follows', 'followee_id = ?', [$userId]);
+    }
+
+    public static function followingCount($userId)
+    {
+        return R::count('follows', 'follower_id = ?', [$userId]);
+    }
+
+    public static function getFollowers($userId)
+    {
+        return R::findAll('follows', 'followee_id = ? ORDER BY created_at DESC', [$userId]);
+    }
+
+    public static function getFollowing($userId)
+    {
+        return R::findAll('follows', 'follower_id = ? ORDER BY created_at DESC', [$userId]);
+    }
 }

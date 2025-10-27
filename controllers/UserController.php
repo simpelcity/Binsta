@@ -5,6 +5,7 @@ namespace Binsta\Controllers;
 require_once __DIR__ . '/../vendor/autoload.php';
 
 use Binsta\Models\User;
+use Binsta\Models\Snippet;
 use RedBeanPHP\R;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
@@ -27,11 +28,32 @@ class UserController extends BaseController
             $snippet->like_count = R::count('likes', 'snippet_id = ?', [$snippet->id]);
         }
 
+        // follow state + counts
+        $isFollowing = false;
+        $followerCount = 0;
+        $followingCount = 0;
+        try {
+            $isFollowing = User::isFollowing($userProfile->id, $id);
+            $followerCount = User::followerCount($id);
+            $followingCount = User::followingCount($id);
+        } catch (\Exception $error) {
+            throw new \Exception("Error: " . $error->getMessage(), (int)$error->getCode());
+        }
+
+        $message = $_SESSION['flash_message'] ?? null;
+        $error = $_SESSION['flash_error'] ?? null;
+        unset($_SESSION['flash_message'], $_SESSION['flash_error']);
+
         renderPage('users/profile.twig', [
             'title' => $user->username . "'s Profile",
             'user' => $user,
             'userProfile' => $userProfile,
             'snippets' => $snippets,
+            'isFollowing' => $isFollowing,
+            'followerCount' => $followerCount,
+            'followingCount' => $followingCount,
+            'message' => $message,
+            'error' => $error,
         ]);
     }
 
@@ -270,5 +292,42 @@ class UserController extends BaseController
             error_log("Email sending failed: {$mail->ErrorInfo}");
             return false;
         }
+    }
+
+    public function followpost()
+    {
+        $this->authorizeUser();
+
+        $followerId = $_SESSION['user'] ?? null;
+        $followeeId = $_POST['followee_id'] ?? null;
+
+        if (!$followerId || !$followeeId) {
+            $_SESSION['flash_message'] = 'Invalid follow request.';
+            $_SESSION['flash_error'] = 'danger';
+            header('Location: /');
+            exit;
+        }
+
+        if ($followerId == $followeeId) {
+            $_SESSION['flash_message'] = 'You cannot follow yourself.';
+            $_SESSION['flash_error'] = 'danger';
+            header("Location: /user/profile/$followeeId");
+            exit;
+        }
+
+        // Toggle follow/unfollow
+        $result = User::toggleFollow($followerId, $followeeId);
+
+        if ($result) {
+            $msg = User::isFollowing($followerId, $followeeId) ? 'Followed user.' : 'Unfollowed user.';
+            $_SESSION['flash_message'] = $msg;
+            $_SESSION['flash_error'] = 'success';
+        } else {
+            $_SESSION['flash_message'] = 'Failed to update follow status.';
+            $_SESSION['flash_error'] = 'danger';
+        }
+
+        header("Location: /user/profile/$followeeId");
+        exit;
     }
 }

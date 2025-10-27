@@ -1,6 +1,6 @@
 {
   "name": "binsta",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "main": "index.php",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -8,7 +8,7 @@
     "build": "sass ./public/styles/scss/style.scss ./public/styles/css/style.css --style compressed"
   },
   "author": "",
-  "license": "ISC",
+  "license": "UNLICENSED",
   "description": "",
   "dependencies": {
     "bootstrap": "^5.3.7",
