@@ -33,7 +33,9 @@ class User
     public static function update($id, $data, $file = null)
     {
         $user = R::load('users', $id);
-        if (!$user->id) return false;
+        if (!$user->id) {
+            return false;
+        }
 
         $uploadDir = __DIR__ . '/../public/assets/uploads/';
 
@@ -83,7 +85,9 @@ class User
     public static function createResetToken($email)
     {
         $user = self::findByEmail($email);
-        if (!$user) return false;
+        if (!$user) {
+            return false;
+        }
 
         $token = bin2hex(random_bytes(32));
         $expires = date('Y-m-d H:i:s', strtotime('+1 hour'));
@@ -103,7 +107,9 @@ class User
     public static function resetPassword($token, $newPassword)
     {
         $user = self::findByResetToken($token);
-        if (!$user) return false;
+        if (!$user) {
+            return false;
+        }
 
         $user->password = password_hash($newPassword, PASSWORD_BCRYPT);
         $user->reset_token = null;
@@ -114,14 +120,20 @@ class User
 
     public static function isFollowing($followerId, $followeeId)
     {
-        if (!$followerId || !$followeeId) return false;
+        if (!$followerId || !$followeeId) {
+            return false;
+        }
+
         $follow = R::findOne('follows', 'follower_id = ? AND followee_id = ?', [$followerId, $followeeId]);
         return (bool) $follow;
     }
 
     public static function follow($followerId, $followeeId)
     {
-        if (!$followerId || !$followeeId || $followerId == $followeeId) return false;
+        if (!$followerId || !$followeeId || $followerId == $followeeId) {
+            return false;
+        }
+
         if (self::isFollowing($followerId, $followeeId)) return true;
 
         $f = R::dispense('follows');
@@ -132,12 +144,16 @@ class User
 
     public static function unfollow($followerId, $followeeId)
     {
-        if (!$followerId || !$followeeId) return false;
+        if (!$followerId || !$followeeId) {
+            return false;
+        }
+
         $follow = R::findOne('follows', 'follower_id = ? AND followee_id = ?', [$followerId, $followeeId]);
         if ($follow) {
             R::trash($follow);
             return true;
         }
+
         return false;
     }
 
@@ -146,6 +162,7 @@ class User
         if (self::isFollowing($followerId, $followeeId)) {
             return self::unfollow($followerId, $followeeId);
         }
+
         return self::follow($followerId, $followeeId);
     }
 

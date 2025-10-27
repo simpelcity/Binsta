@@ -107,7 +107,7 @@ class UserController extends BaseController
         exit;
     }
 
-    public function change_password()
+    public function changePassword()
     {
         $this->authorizeUser();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -129,7 +129,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function change_passwordpost()
+    public function changePasswordpost()
     {
         $this->authorizeUser();
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
@@ -158,7 +158,7 @@ class UserController extends BaseController
         exit;
     }
 
-    public function forgot_password()
+    public function forgotPassword()
     {
         $message = $_SESSION['flash_message'] ?? null;
         $error = $_SESSION['flash_error'] ?? null;
@@ -176,7 +176,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function forgot_passwordPost()
+    public function forgotPasswordPost()
     {
         $email = $_POST['email'] ?? '';
 
@@ -212,7 +212,7 @@ class UserController extends BaseController
         exit;
     }
 
-    public function reset_password()
+    public function resetPassword()
     {
         $token = $_GET['token'] ?? '';
         $user = User::findByResetToken($token);
@@ -230,7 +230,7 @@ class UserController extends BaseController
         ]);
     }
 
-    public function reset_passwordPost()
+    public function resetPasswordPost()
     {
         $token = $_POST['token'] ?? '';
 

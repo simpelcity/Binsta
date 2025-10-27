@@ -39,6 +39,7 @@ class Snippet
         if ($snippet->id) {
             return R::trash($snippet);
         }
+
         return false;
     }
 
@@ -49,6 +50,6 @@ class Snippet
 
     public static function snippetCountByUserId($userId)
     {
-        return R::count('snippets', 'user_id = ?', '$userId');
+        return R::count('snippets', 'user_id = ?', [$userId]);
     }
 }
