@@ -134,7 +134,9 @@ class User
             return false;
         }
 
-        if (self::isFollowing($followerId, $followeeId)) return true;
+        if (self::isFollowing($followerId, $followeeId)) {
+            return true;
+        }
 
         $f = R::dispense('follows');
         $f->follower_id = $followerId;
