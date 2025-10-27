@@ -28,16 +28,16 @@ class UserController extends BaseController
             $snippet->like_count = R::count('likes', 'snippet_id = ?', [$snippet->id]);
         }
 
-        // follow state + counts
         $isFollowing = false;
         $followerCount = 0;
         $followingCount = 0;
+
         try {
             $isFollowing = User::isFollowing($userProfile->id, $id);
             $followerCount = User::followerCount($id);
             $followingCount = User::followingCount($id);
-        } catch (\Exception $error) {
-            throw new \Exception("Error: " . $error->getMessage(), (int)$error->getCode());
+        } catch (Exception $error) {
+            throw new Exception("Error: " . $error->getMessage(), (int)$error->getCode());
         }
 
         $message = $_SESSION['flash_message'] ?? null;
@@ -315,7 +315,6 @@ class UserController extends BaseController
             exit;
         }
 
-        // Toggle follow/unfollow
         $result = User::toggleFollow($followerId, $followeeId);
 
         if ($result) {

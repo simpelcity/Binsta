@@ -112,7 +112,6 @@ class User
         return true;
     }
 
-    // Followers / Following
     public static function isFollowing($followerId, $followeeId)
     {
         if (!$followerId || !$followeeId) return false;
@@ -123,7 +122,6 @@ class User
     public static function follow($followerId, $followeeId)
     {
         if (!$followerId || !$followeeId || $followerId == $followeeId) return false;
-        // Prevent duplicate
         if (self::isFollowing($followerId, $followeeId)) return true;
 
         $f = R::dispense('follows');
