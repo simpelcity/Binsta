@@ -26,16 +26,27 @@ class SnippetController extends BaseController
 
     public function createPost()
     {
-        if (
-            empty($_POST['code']) ||
-            empty($_POST['language']) ||
-            empty($_POST['caption'])
-        ) {
+        $this->authorizeUser();
+
+        $code = $_POST['code'] ?? '';
+        $language = $_POST['language'] ?? '';
+        $caption = $_POST['caption'] ?? '';
+
+        if (empty($code) || empty($language) || empty($caption)) {
+            http_response_code(400);
+
             renderPage('snippets/create.twig', [
-                'title' => 'Create snippet',
+                'title' => 400 . ' - Bad Request',
                 'activeController' => 'create',
                 'error' => 'Please fill in all fields',
+                'errorNumber' => 400,
+                'old' => [
+                    'code' => $code,
+                    'language' => $language,
+                    'caption' => $caption
+                ]
             ]);
+            exit;
         }
 
         Snippet::create($_POST['code'], $_POST['language'], $_POST['caption'], $_SESSION['user'], new \DateTime());
