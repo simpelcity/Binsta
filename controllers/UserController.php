@@ -80,6 +80,8 @@ class UserController extends BaseController
 
     public function editPost()
     {
+        $this->authorizeUser();
+
         $userId = $_SESSION['user'];
 
         $data = [
@@ -129,6 +131,8 @@ class UserController extends BaseController
 
     public function changePasswordpost()
     {
+        $this->authorizeUser();
+
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $parts = explode('/', trim($path, '/'));
         $id = end($parts);
