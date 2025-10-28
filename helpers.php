@@ -14,19 +14,12 @@ function error($errorNumber, $errorMessage)
 {
     http_response_code($errorNumber);
 
-    $user = null;
-    $userProfile = null;
-
     $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
     $parts = explode('/', trim($path, '/'));
     $id = end($parts);
 
-    if (is_numeric($id)) {
-        $user = User::findById($id);
-    }
-    if (isset($_SESSION['user'])) {
-        $userProfile = User::findById($_SESSION['user']);
-    }
+    $user = User::findById($id);
+    $userProfile = User::findById($_SESSION['user']);
 
     renderpage('error.twig', [
         'title' => 'Error - ' . $errorNumber,
