@@ -23,8 +23,6 @@ class LikeController extends BaseController
             Like::add($userId, $snippetId);
         }
 
-        $likeCount = Like::countBySnippetId($snippetId);
-
         header('Location: ' . $_SERVER['HTTP_REFERER']);
         exit;
     }

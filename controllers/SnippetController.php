@@ -12,6 +12,7 @@ class SnippetController extends BaseController
     public function create()
     {
         $this->authorizeUser();
+
         $user = User::findById($_SESSION['user']);
         $userProfile = User::findById($_SESSION['user']);
 

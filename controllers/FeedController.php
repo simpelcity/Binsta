@@ -13,6 +13,7 @@ class FeedController extends BaseController
     public function index()
     {
         $this->authorizeUser();
+
         $user = User::findById($_SESSION['user']);
         $snippets = $this->findAll('snippets', 'ORDER BY created_at DESC');
 

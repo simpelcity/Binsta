@@ -187,4 +187,11 @@ class User
     {
         return R::findAll('follows', 'follower_id = ? ORDER BY created_at DESC', [$userId]);
     }
+
+    public static function updatePassword($userId, $newPassword)
+    {
+        $user = User::findById($userId);
+        $user->password = password_hash($newPassword, PASSWORD_DEFAULT);
+        return R::store($user);
+    }
 }

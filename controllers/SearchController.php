@@ -12,6 +12,7 @@ class SearchController extends BaseController
     public function search()
     {
         $this->authorizeUser();
+
         $searchTerm = $_GET['search'] ?? '';
         $users = Search::searchUsers($searchTerm);
         $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
