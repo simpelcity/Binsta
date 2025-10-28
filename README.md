@@ -91,9 +91,9 @@ You have to change a couple of lines to make it work correctly,
   - you need to have 2fa enabled on your google account to have access to app passwords. To make an app password, you have to go over to https://myaccount.google.com/apppasswords and create one with the name 'Mail' and paste the password without spaces on line `256`.
 
 
-### XAMPP vhost
+### XAMPP vhosts
 
-Add this to the end of your `httpd-vhost.conf` file
+Add this to the end of your `httpd-vhosts.conf` file
 
 ```conf
 <VirtualHost *:80>
@@ -108,6 +108,17 @@ Add this to the end of your `httpd-vhost.conf` file
 ```
 
 and restart your XAMPP modules.
+
+### hosts file
+
+On Windows you need to add the domain to the hosts file, here's how to do that.
+1. Head to `C:\Windows\System32\drivers\etc\hosts`.
+2. Open the hosts file with a text editor with admin permissions.
+3. Add this at the end of the file:
+```hosts
+127.0.0.1 binsta.nexed.com
+```
+4. Save the file with admin permissions. (If you're unable to open with admin permissions, click 'Save As' when done and replace the existing hosts file with the one you just saved)
 
 ## 🪲 Issues
 
