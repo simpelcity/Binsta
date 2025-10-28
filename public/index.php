@@ -1,6 +1,20 @@
 <?php
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../helpers.php';
+
+use RedBeanPHP\R as R;
+
+$host = '127.0.0.1';
+$dbname = 'binsta';
+$username = 'bit_academy';
+$password = 'bit_academy';
+$charset = 'utf8mb4';
+R::setup(
+    "mysql:host=$host;dbname=$dbname;charset=$charset",
+    $username,
+    $password
+);
 
 session_start();
 
