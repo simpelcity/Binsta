@@ -1,10 +1,20 @@
 <?php
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once __DIR__ . '/../helpers.php';
+
+use RedBeanPHP\R as R;
+
+$host = '127.0.0.1';
+$dbname = 'binsta';
+$username = 'bit_academy';
+$password = 'bit_academy';
+$charset = 'utf8mb4';
+R::setup(
+    "mysql:host=$host;dbname=$dbname;charset=$charset",
+    $username,
+    $password
+);
 
 session_start();
 
@@ -13,6 +23,12 @@ $parts = explode('/', $path);
 
 $controllerPart = $parts[0] ?? '';
 $controllerName = $controllerPart ? 'Binsta\\Controllers\\' . ucfirst($controllerPart) . 'Controller' : (!isset($_SESSION['user']) ? 'Binsta\\Controllers\\AuthController' : 'Binsta\\Controllers\\FeedController');
+
+if (!class_exists($controllerName)) {
+    error(404, "Controller '$controllerName' not found");
+}
+
+$controller = new $controllerName();
 
 $defaultMethods = [
     'Binsta\\Controllers\\AuthController' => 'login',
@@ -31,18 +47,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 $params = array_slice($parts, 2);
 
-if (!class_exists($controllerName)) {
-    error(404, "Controller '$controllerPart' was not found!");
-} elseif (class_exists($controllerName)) {
-    $controller = new $controllerName();
-    if (!method_exists($controller, $method)) {
-        error(404, "Method '$method' does not exist in controller '$controllerPart'!");
-    } elseif (method_exists($controller, $method)) {
-        call_user_func_array([$controller, $method], $params);
-        exit;
-    }
-} else {
-    error(500);
+if (!method_exists($controller, $method)) {
+    error(404, "Method '$method' not found in controller '$controllerName'");
 }
 
 call_user_func_array([$controller, $method], $params);

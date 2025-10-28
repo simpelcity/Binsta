@@ -1,48 +1,35 @@
-{% extends '/layouts/app.twig' %}
-
-{% block content %}
+{% extends '/layouts/app.twig' %} {% block content %}
 <div class="card mt-5 p-4 text-center">
-    <h1 class="m-0">Create new snippet</h1>
-    <div class="card-body">
-        <form action="/snippet/create" method="post">
-            <div class="row mb-3">
-                <textarea
-                    class="form-control bg-light"
-                    name="code"
-                    placeholder="Paste your code here"
-                    rows="8">{{ old.code|default('') }}</textarea>
-            </div>
-            <div class="row d-flex flex-column-reverse flex-md-row justify-content-center gap-3 gap-md-0 form-bottom">
-                <div class="col-12 col-md-6 ps-0 pe-0 ps-md-0 pe-md-25">
-                    <div>
-                        <label for="language-select" class="form-label mb-2 fw-bold fs-5">Syntax highlighting</label>
-                        <select class="form-select bg-light" aria-label="Language" name="language" id="language-select">
-                            <option value="" {% if old.language is not defined or old.language == '' %}selected{% endif %}>None</option>
-                            <option value="php" {% if old.language == 'php' %}selected{% endif %}>PHP</option>
-                            <option value="js" {% if old.language == 'js' %}selected{% endif %}>JavaScript</option>
-                            <option value="html" {% if old.language == 'html' %}selected{% endif %}>HTML</option>
-                            <!-- Add other languages here -->
-                        </select>
-                    </div>
-                    <button type="submit" name="post" class="btn btn-primary w-50 mt-3">Post</button>
-                </div>
-                <div class="col-12 col-md-6 pe-0 ps-0 pe-md-0 ps-md-25">
-                    <textarea
-                        class="form-control bg-light"
-                        name="caption"
-                        placeholder="Caption"
-                        rows="5">{{ old.caption|default('') }}</textarea>
-                </div>
-            </div>
-
-            {% if error %}
-            <div class="alert alert-danger mt-3">{% if errorNumber is defined %} {{ errorNumber }}{% endif %} - {{ error }}</div>
-            {% endif %}
-        </form>
-    </div>
+	<h1 class="m-0">Create new snippet</h1>
+	<div class="card-body">
+		<form action="/snippet/create" method="post">
+			<div class="row mb-3">
+				<textarea
+					class="form-control bg-light"
+					name="code"
+					placeholder="Paste your code here"
+					rows="8"></textarea>
+			</div>
+			<div class="row d-flex flex-column-reverse flex-md-row justify-content-center gap-3 gap-md-0 form-bottom">
+				<div class="col-12 col-md-6 ps-0 pe-0 ps-md-0 pe-md-25">
+					<div>
+						<label for="language-select" class="from-label mb-2 fw-bold fs-5">Syntax highlighting</label>
+						<select class="form-select bg-light" aria-label="Language" name="language" id="language-select">
+							<option selected>None</option>
+						</select>
+					</div>
+					<button type="submit" name="post" class="btn btn-primary w-50 mt-3">Post</button>
+				</div>
+				<div class="col-12 col-md-6 pe-0 ps-0 pe-md-0 ps-md-25">
+					<textarea class="form-control bg-light" name="caption" placeholder="Caption" rows="5"></textarea>
+				</div>
+				{% if error %}
+				<div class="alert alert-danger text-danger">{{ error }}</div>
+				{% endif %}
+			</div>
+		</form>
+	</div>
 </div>
-{% endblock %}
-
-{% block script %}
+{% endblock %} {% block script %}
 <script src="../../assets/js/snippet.js"></script>
 {% endblock %}
