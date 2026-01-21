@@ -53,8 +53,8 @@ Binsta is a full-stack social snippet sharing application, built to let develope
 ### Option 1: Clone Repository
 
 ```bash
-git clone git@git.nexed.com:0191bd26-8ad6-775a-a3fb-8161a33b6a11/0191d5d1-b9ce-7ad9-9c76-6deeabe8482d/Binsta-ecd4ba913395-445dbf0a9680.git
-cd Binsta-ecd4ba913395-445dbf0a9680
+git clone git@github.com:simpelcity/Binsta.git
+cd Binsta
 ```
 
 ### Option 2: Download ZIP
@@ -85,11 +85,14 @@ so that all data is inserted into the database.
 
 ### ✏️ Code changes
 
-You have to change a couple of lines to make it work correctly,
-`controllers/UserController.php`
-  - lines `255` and `268` you have to insert your email address for the reset password function. 
-  - line `256` you have to paste your google app password without spaces in between,
-  - you need to have 2fa enabled on your google account to have access to app passwords. To make an app password, you have to go over to https://myaccount.google.com/apppasswords and create one with the name 'Mail' and paste the password without spaces on line `256`.
+You have to create a `.env.local` file in the `/Binsta` folder, in this file paste these lines:
+
+```.env
+GMAIL_ADDRESS=
+GOOGLE_APP_PASSWORD=
+```
+
+then insert your gmail address and google app password. To create a google app pasword, you need to have 2fa enabled on your google account to have access to app passwords. To make an app password, you have to go over to https://myaccount.google.com/apppasswords and create one with the name 'Mail' and paste the password without spaces in the `.env.local` file.
 
 
 ### XAMPP vhosts

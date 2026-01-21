@@ -12,22 +12,22 @@ $charset = 'utf8mb4';
 
 $dsn = "mysql:host=$host;dbname=$dbname;charset=$charset";
 $options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+  PDO::ATTR_EMULATE_PREPARES => false,
 ];
 
 try {
-    $conn = new PDO($dsn, $username, $password, $options);
-    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+  $conn = new PDO($dsn, $username, $password, $options);
+  $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 } catch (PDOException $error) {
-    throw new PDOException("Connection failed: " . $error->getMessage(), (int)$error->getCode());
+  throw new PDOException("Connection failed: " . $error->getMessage(), (int)$error->getCode());
 }
 
 R::setup(
-    "mysql:host=$host;dbname=$dbname;charset=$charset",
-    $username,
-    $password
+  "mysql:host=$host;dbname=$dbname;charset=$charset",
+  $username,
+  $password
 );
 
 R::exec('SET FOREIGN_KEY_CHECKS = 0;');
@@ -42,31 +42,31 @@ R::exec('SET FOREIGN_KEY_CHECKS = 1;');
 
 // --- USERS ---
 $users = [
-    [
-        'username' => 'Simpelcity',
-        'email' => 'simpelcity@example.com',
-        'password' => password_hash('admin', PASSWORD_BCRYPT),
-    ],
-    [
-        'username' => 'future-tech-leader',
-        'email' => 'future-tech-leader@example.com',
-        'password' => password_hash('bit_academy', PASSWORD_BCRYPT),
-    ],
-    [
-        'username' => 'Vinxy',
-        'email' => 'vinxy@example.com',
-        'password' => password_hash('vinxy_user', PASSWORD_BCRYPT),
-    ]
+  [
+    'username' => 'Simpelcity',
+    'email' => 'simpelcity@example.com',
+    'password' => password_hash('admin', PASSWORD_BCRYPT),
+  ],
+  [
+    'username' => 'future-tech-leader',
+    'email' => 'future-tech-leader@example.com',
+    'password' => password_hash('bit_academy', PASSWORD_BCRYPT),
+  ],
+  [
+    'username' => 'Vinxy',
+    'email' => 'vinxy@example.com',
+    'password' => password_hash('vinxy_user', PASSWORD_BCRYPT),
+  ]
 ];
 
 $userBeans = [];
 foreach ($users as $data) {
-    $user = R::dispense('users');
-    $user->username = $data['username'];
-    $user->email = $data['email'];
-    $user->password = $data['password'];
-    R::store($user);
-    $userBeans[$data['username']] = $user;
+  $user = R::dispense('users');
+  $user->username = $data['username'];
+  $user->email = $data['email'];
+  $user->password = $data['password'];
+  R::store($user);
+  $userBeans[$data['username']] = $user;
 }
 
 // --- SNIPPETS ---
@@ -291,48 +291,48 @@ client.login(config.token);
 JS;
 
 $snippets = [
-    [
-        'user' => 'Simpelcity',
-        'code' => $snippetContent1,
-        'language' => 'php',
-        'caption' => 'Binsta SnippetController',
-    ],
-    [
-        'user' => 'Simpelcity',
-        'code' => $snippetContent2,
-        'language' => 'php',
-        'caption' => 'Binsta Comment model',
-    ],
-    [
-        'user' => 'future-tech-leader',
-        'code' => $snippetContent3,
-        'language' => 'javascript',
-        'caption' => 'Binsta snippet.js',
-    ],
-    [
-        'user' => 'Vinxy',
-        'code' => $snippetContent4,
-        'language' => 'twig',
-        'caption' => 'Binsta search template',
-    ],
-    [
-        'user' => 'future-tech-leader',
-        'code' => $snippetContent5,
-        'language' => 'sql',
-        'caption' => 'SQL code for netland database',
-    ],
-    [
-        'user' => 'Vinxy',
-        'code' => $snippetContent6,
-        'language' => 'scss',
-        'caption' => 'Binsta mobile navbar styling'
-    ],
-    [
-        'user' => 'Simpelcity',
-        'code' => $snippetContent7,
-        'language' => 'javascript',
-        'caption' => 'Announcement discord bot',
-    ]
+  [
+    'user' => 'Simpelcity',
+    'code' => $snippetContent1,
+    'language' => 'php',
+    'caption' => 'Binsta SnippetController',
+  ],
+  [
+    'user' => 'Simpelcity',
+    'code' => $snippetContent2,
+    'language' => 'php',
+    'caption' => 'Binsta Comment model',
+  ],
+  [
+    'user' => 'future-tech-leader',
+    'code' => $snippetContent3,
+    'language' => 'javascript',
+    'caption' => 'Binsta snippet.js',
+  ],
+  [
+    'user' => 'Vinxy',
+    'code' => $snippetContent4,
+    'language' => 'twig',
+    'caption' => 'Binsta search template',
+  ],
+  [
+    'user' => 'future-tech-leader',
+    'code' => $snippetContent5,
+    'language' => 'sql',
+    'caption' => 'SQL code for netland database',
+  ],
+  [
+    'user' => 'Vinxy',
+    'code' => $snippetContent6,
+    'language' => 'scss',
+    'caption' => 'Binsta mobile navbar styling'
+  ],
+  [
+    'user' => 'Simpelcity',
+    'code' => $snippetContent7,
+    'language' => 'javascript',
+    'caption' => 'Announcement discord bot',
+  ]
 ];
 
 date_default_timezone_set('Europe/Amsterdam');
@@ -340,94 +340,94 @@ date_default_timezone_set('Europe/Amsterdam');
 $snippetBeans = [];
 $time = new DateTime();
 foreach ($snippets as $index => $data) {
-    $snippet = R::dispense('snippets');
-    $snippet->user_id = $userBeans[$data['user']]->id;
-    $snippet->code = $data['code'];
-    $snippet->language = $data['language'];
-    $snippet->caption = $data['caption'];
+  $snippet = R::dispense('snippets');
+  $snippet->user_id = $userBeans[$data['user']]->id;
+  $snippet->code = $data['code'];
+  $snippet->language = $data['language'];
+  $snippet->caption = $data['caption'];
 
-    $snippetTime = clone $time;
-    $snippetTime->modify("-$index minutes");
-    $snippet->created_at = $snippetTime->format('Y-m-d H:i:s');
-    R::store($snippet);
-    $snippetBeans[] = $snippet;
+  $snippetTime = clone $time;
+  $snippetTime->modify("-$index minutes");
+  $snippet->created_at = $snippetTime->format('Y-m-d H:i:s');
+  R::store($snippet);
+  $snippetBeans[] = $snippet;
 }
 
 // --- COMMENTS ---
 
 $comments = [
-    [
-        'snippet' => 0,
-        'user' => 'Vinxy',
-        'comment' => 'Crazy code snippet',
-    ],
-    [
-        'snippet' => 6,
-        'user' => 'future-tech-leader',
-        'comment' => 'Nice discord bot',
-    ],
-    [
-        'snippet' => 3,
-        'user' => 'Simpelcity',
-        'comment' => 'Is that Bootstrap?',
-    ],
-    [
-        'snippet' => 0,
-        'user' => 'future-tech-leader',
-        'comment' => 'Nice code structure',
-    ]
+  [
+    'snippet' => 0,
+    'user' => 'Vinxy',
+    'comment' => 'Crazy code snippet',
+  ],
+  [
+    'snippet' => 6,
+    'user' => 'future-tech-leader',
+    'comment' => 'Nice discord bot',
+  ],
+  [
+    'snippet' => 3,
+    'user' => 'Simpelcity',
+    'comment' => 'Is that Bootstrap?',
+  ],
+  [
+    'snippet' => 0,
+    'user' => 'future-tech-leader',
+    'comment' => 'Nice code structure',
+  ]
 ];
 
 foreach ($comments as $data) {
-    $comment = R::dispense('comments');
-    $comment->snippet_id = $snippetBeans[$data['snippet']]->id;
-    $comment->user_id = $userBeans[$data['user']]->id;
-    $comment->comment = $data['comment'];
-    $comment->created_at = date('Y-m-d H:i:s');
-    R::store($comment);
+  $comment = R::dispense('comments');
+  $comment->snippet_id = $snippetBeans[$data['snippet']]->id;
+  $comment->user_id = $userBeans[$data['user']]->id;
+  $comment->comment = $data['comment'];
+  $comment->created_at = date('Y-m-d H:i:s');
+  R::store($comment);
 }
 
 $likes = [
-    ['snippet' => 0, 'user' => 'Vinxy'],
-    ['snippet' => 0, 'user' => 'future-tech-leader'],
-    ['snippet' => 2, 'user' => 'Simpelcity'],
-    ['snippet' => 6, 'user' => 'future-tech-leader'],
-    ['snippet' => 5, 'user' => 'Simpelcity'],
+  ['snippet' => 0, 'user' => 'Vinxy'],
+  ['snippet' => 0, 'user' => 'future-tech-leader'],
+  ['snippet' => 2, 'user' => 'Simpelcity'],
+  ['snippet' => 6, 'user' => 'future-tech-leader'],
+  ['snippet' => 5, 'user' => 'Simpelcity'],
 ];
 
 foreach ($likes as $data) {
-    $like = R::dispense('likes');
-    $like->snippet_id = $snippetBeans[$data['snippet']]->id;
-    $like->user_id = $userBeans[$data['user']]->id;
-    R::store($like);
+  $like = R::dispense('likes');
+  $like->snippet_id = $snippetBeans[$data['snippet']]->id;
+  $like->user_id = $userBeans[$data['user']]->id;
+  R::store($like);
 }
 
 // --- FOLLOWS ---
 
 $follows = [
-    ['follower' => 'Simpelcity', 'followee' => 'future-tech-leader'],
-    ['follower' => 'Vinxy', 'followee' => 'Simpelcity'],
-    ['follower' => 'future-tech-leader', 'followee' => 'Vinxy'],
+  ['follower' => 'Simpelcity', 'followee' => 'future-tech-leader'],
+  ['follower' => 'Vinxy', 'followee' => 'Simpelcity'],
+  ['follower' => 'future-tech-leader', 'followee' => 'Vinxy'],
 ];
 
 foreach ($follows as $data) {
-    $follow = R::dispense('follows');
-    $follow->follower_id = $userBeans[$data['follower']]->id;
-    $follow->followee_id = $userBeans[$data['followee']]->id;
-    R::store($follow);
+  $follow = R::dispense('follows');
+  $follow->follower_id = $userBeans[$data['follower']]->id;
+  $follow->followee_id = $userBeans[$data['followee']]->id;
+  R::store($follow);
 }
 
 $all = [
-    ['type' => 'users', 'items' => $users, 'label' => 'user'],
-    ['type' => 'snippets', 'items' => $snippets, 'label' => 'snippet'],
-    ['type' => 'comments', 'items' => $comments, 'label' => 'comment'],
-    ['type' => 'likes', 'items' => $likes, 'label' => 'like'],
-    ['type' => 'follows', 'items' => $follows, 'label' => 'follow'],
+  ['type' => 'users', 'items' => $users, 'label' => 'user'],
+  ['type' => 'snippets', 'items' => $snippets, 'label' => 'snippet'],
+  ['type' => 'comments', 'items' => $comments, 'label' => 'comment'],
+  ['type' => 'likes', 'items' => $likes, 'label' => 'like'],
+  ['type' => 'follows', 'items' => $follows, 'label' => 'follow'],
 ];
 
 foreach ($all as $group) {
-    echo "Wiped table " . $group['type'] . PHP_EOL;
-    $count = count($group['items']);
-    $label = $count === 1 ? $group['label'] : $group['label'] . 's';
-    echo "Inserted $count $label" . PHP_EOL;
+  echo "Wiped table " . $group['type'] . PHP_EOL;
+  $count = count($group['items']);
+  $label = $count === 1 ? $group['label'] : $group['label'] . 's';
+  echo "Inserted $count $label" . PHP_EOL;
 }
