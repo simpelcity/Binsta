@@ -126,7 +126,7 @@ On Windows you need to add the domain to the hosts file, here's how to do that.
 
 ## 🪲 Issues
 
-1. Head over to the Bitlab repository.
+1. Head over to the gitlab repository.
 2. Click on the Issues tab and then on "New issue".
 3. Fill in what the issue is, and submit it.
 
