@@ -1,18 +1,20 @@
 {% extends '/layouts/app.twig' %} {% block content %}
-<h1 class="my-4">Search Results for "{{ searchTerm }}"</h1>
+<h1 class="my-4 text-center">Search Results for "{{ searchTerm }}"</h1>
 
 {% if users|length > 0 %} {% for user in users %}
-<div class="card my-2" id="user-{{ user.id }}">
-	<div class="d-flex p-3 align-items-center">
-		<a href="/user/profile/{{ user.id }}" class="d-flex align-items-center text-decoration-none text-black">
-			{% if user.pfp %}
-			<img src="/assets/uploads/{{ user.pfp }}" alt="User" class="nav-icon me-2 rounded-circle" />
-			{% else %}
-			<img src="/assets/icons/light/profile-user.png" alt="User" class="nav-icon me-2 theme-icon" />
-			{% endif %}
-			<p class="m-0 fw-bold">{{ user.username }}</p>
-		</a>
-	</div>
+<div class="col-12 col-md-10 col-lg-8 mx-auto">
+  <div class="card my-2" id="user-{{ user.id }}">
+    <div class="d-flex p-3 align-items-center">
+      <a href="/user/profile/{{ user.id }}" class="d-flex align-items-center text-decoration-none text-black">
+        {% if user.pfp %}
+        <img src="/assets/uploads/{{ user.pfp }}" alt="User" class="nav-icon me-2 rounded-circle" />
+        {% else %}
+        <img src="/assets/icons/light/profile-user.png" alt="User" class="nav-icon me-2 theme-icon" />
+        {% endif %}
+        <p class="m-0 fw-bold">{{ user.username }}</p>
+      </a>
+    </div>
+  </div>
 </div>
 {% endfor %} {% else %}
 <p>No results found for "{{ searchTerm }}".</p>
