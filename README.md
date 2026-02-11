@@ -74,7 +74,7 @@ npm i
 
 ### Database
 
-Run the code in `migrations.sql` in your [phpmyadmin](http://localhost/phpmyadmin) to create the database, also run the `seeder.php` with :
+Run the code in `database/migrations.sql` in your [phpmyadmin](http://localhost/phpmyadmin) to create the database, also run the `seeder.php` with :
 ```bash
 php database/seeder.php
 ```
