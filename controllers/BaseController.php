@@ -7,7 +7,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use RedBeanPHP\R as R;
 
 R::setup(
-    'mysql:host=localhost;dbname=binsta;charset=utf8mb4',
+    'mysql:host=127.0.0.1;dbname=binsta;charset=utf8mb4',
     'bit_academy',
     'bit_academy'
 );
